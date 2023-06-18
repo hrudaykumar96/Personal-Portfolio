@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <!-- custom css link -->
+    <link rel="stylesheet" href="style.css">
+    <!-- font-awesome cdn link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <!-- navbar section start -->
+
+    <header>
+        <a class="logo" href="#">Portfolio</a>
+        <div id="menu" onclick="menubar()" <i class="fa-solid fa-bars"></i>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav id="options">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- navbar section end -->
+
+    <!-- home section start -->
+
+    <home id="home">
+        <div class="image">
+            <img id="tilt"
+                src="https://media.licdn.com/dms/image/C5603AQFuLyuzOUimfw/profile-displayphoto-shrink_800_800/0/1576057989828?e=2147483647&v=beta&t=5jqz5TLdKklpsaJOfIxksy1iKdlgWPO8NfGR20qEcEU"
+                alt="">
+            <div class="info">
+                <h3>Hi there,</h3>
+                <p id="name">M Hruday Kumar</p>
+                <p>I'm a <span class="typing-text"></span></p>
+            </div>
+        </div>
+        <div class="bubbles">
+            <img src="https://thumbnail.imgbin.com/22/25/2/imgbin-bubble-FKatgjwf8ZNa9U9SeJqbtjRY9_t.jpg" alt="">
+            <img src="https://freepngimg.com/thumb/bubbles/25068-6-bubbles-file-thumb.png" alt="">
+            <img src="https://thumbnail.imgbin.com/22/25/2/imgbin-bubble-FKatgjwf8ZNa9U9SeJqbtjRY9_t.jpg" alt="">
+            <img src="https://thumbnail.imgbin.com/22/25/2/imgbin-bubble-FKatgjwf8ZNa9U9SeJqbtjRY9_t.jpg" alt="">
+            <img src="https://thumbnail.imgbin.com/22/25/2/imgbin-bubble-FKatgjwf8ZNa9U9SeJqbtjRY9_t.jpg" alt="">
+            <img src="https://freepngimg.com/thumb/bubbles/25068-6-bubbles-file-thumb.png" alt="">
+            <img src="https://thumbnail.imgbin.com/22/25/2/imgbin-bubble-FKatgjwf8ZNa9U9SeJqbtjRY9_t.jpg" alt="">
+            <img src="https://thumbnail.imgbin.com/22/25/2/imgbin-bubble-FKatgjwf8ZNa9U9SeJqbtjRY9_t.jpg" alt="">
+            <img src="https://freepngimg.com/thumb/bubbles/25068-6-bubbles-file-thumb.png" alt="">
+            <img src="https://thumbnail.imgbin.com/22/25/2/imgbin-bubble-FKatgjwf8ZNa9U9SeJqbtjRY9_t.jpg" alt="">
+        </div>
+    </home>
+
+    <!-- home section end -->
+
+    <!-- about section start -->
+    <about id="about">
+        <h2 class="heading"><i class="fas fa-user-alt"></i> About <span>Me</span></h2>
+        <div id="image">
+            <img id="tilt"
+                src="https://media.licdn.com/dms/image/C5603AQFuLyuzOUimfw/profile-displayphoto-shrink_800_800/0/1576057989828?e=2147483647&v=beta&t=5jqz5TLdKklpsaJOfIxksy1iKdlgWPO8NfGR20qEcEU"
+                alt="">
+        </div>
+        <div class="box">
+            <h3>I'm Hruday Kumar</h3>
+            <span class="tag">Python Developer</span>
+            <p>I am a Python developer based in Visakhapatnam, India. Iam an Engineering Graduate in Mechanical
+                department from WISTM Engineering College. I am very passionate about improving my coding skills &
+                developing applications & websites. Working for myself to improve my skills.</p>
+            <ul>
+                <li><span>Name: </span>M Hruday Kumar</li>
+                <li><span>Date of Birth: </span>14<sup>th</sup> June, 1998</li>
+                <li><span>Email: </span>hrudaykumar96@Gmail.com</li>
+                <li><span>Mobile: </span>+91-8500525732</li>
+                <li><span>Place: </span>Visakhapatnam, India - 530008</li>
+            </ul>
+        </div>
+    </about>
+
+    <!-- about section end -->
+
+    <!-- skills section start -->
+
+    <skills id="skills">
+        <h2 class="heading"><i class="fas fa-laptop-code"></i> Skills & <span>Abilities</span></h2>
+        <ul class="list">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>Java Script</li>
+            <li>Python</li>
+            <li>NumPy</li>
+            <li>Pandas</li>
+            <li>Matplotlib</li>
+            <li>Django</li>
+            <li>MySQL</li>
+            <li>PowerBi</li>
+        </ul>
+    </skills>
+
+    <!-- skills section end -->
+
+    <!-- journey section start -->
+
+    <journey id="journey">
+        <h2 class="heading"><i class="fas fa-graduation-cap"></i> My Journey</span></h2>
+        <div class="timeline">
+            <div class="space left-space">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAgVBMVEUFBAQFBAQEAwQDAgMFBQUAAAAAAAABAAAHBgYDAwMDAwMFBQQAAQACAgIBAAAGBQUGBgUDAwMDAgIFBQUBAQEHBwcEBAQEBAMAAAALAgIAAABYDQ5HCwsIBwehGBmKFRYkBwbPHyHCHR8ZAQVnDxDiIiSVFhgyCAh0ERKuGhwCAwSmouDqAAAAK3RSTlMACV+8Pu//4i6JfRvUx/JKB62UKtsfbwzt/+v//xP///3////////////qqdWfvQAAAQ1JREFUeAF1kgWWg1AQBIO7O8STid3/fmv9lxmscWioR73ZiWi68Rd9txHTsv/iuBsFz1bx158Hoa0SBasFPbZV4mTteZrZY/J0pVA4XCirlUJti6z8aWPIQqYtJbR/T7ru79C7WxKG/YaKQ4QPHE8oGM2skOD++XK9QYU5k5CjcCdSDG8hAQSiBwphNZcAAtH1jPMknWsGgWhQKnYibjsSfhhQ4RSi4OOl54V+clGMWkpgAjOEiiQWBKIjGC2ryJkgGKy7KnHjRSp3NXkHVdBtEN5EkoHJgwQmgPGcTJ7bS4JkOBVrZoJg2DpmjQmCwZNnxkyYMz4uZk0SkHc3qqhCRSBEMKAikQTO65/xDfb1K3KVu3+5AAAAAElFTkSuQmCC"
+                    alt="">
+                <div class="content">
+                    <h3>Process Executive</h3>
+                    <p>Patra India BPO Services</p>
+                    <p class="small">2020 - Present</p>
+                    <span class="right-content-arrow"></span>
+                </div>
+            </div>
+            <div class="space right-space">
+                <img src="data:image/jpeg;base64,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"
+                    alt="">
+                <div class="content">
+                    <h3>Btech in Mechanical Engineering | Andhra University</h3>
+                    <p>WISTM Engineering College</p>
+                    <p class="small">2015 - 2019</p>
+                    <span class="left-content-arrow"></span>
+                </div>
+            </div>
+            <div class="space left-space" id="left-space">
+                <img src="data:image/png;base64,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"
+                    alt="">
+                <div class="content">
+                    <h3>Intermediate in MPC | State Board</h3>
+                    <p>Sri Chaitanya Junior College</p>
+                    <p class="small">2013 - 2015</p>
+                    <span class="right-content-arrow" id="right-arrow"></span>
+                </div>
+            </div>
+            <div class="space right-space">
+                <img src="data:image/png;base64,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"
+                    alt="">
+                <div class="content">
+                    <h3>SSC | State Board</h3>
+                    <p>Surya Bharathi English Medium School</p>
+                    <p class="small">2012 - 2013</p>
+                    <span class="left-content-arrow" id="left-arrow"></span>
+                </div>
+            </div>
+        </div>
+    </journey>
+
+    <!-- journey section end -->
+
+    <!-- project section start -->
+
+    <projects id="projects">
+        <h2 class="heading"><i class="fas fa-briefcase"></i> Projects</h2>
+        <div class="row">
+            <div class="column">
+                <div class="card">
+                    <div id="box">
+                        <h3><a href="#" target="_blank"><i class="fa-brands fa-github"></i> Django Webscraping
+                                Project</a></h3>
+                        <p>In this project we create intermediate site for mobiles using Webscraping method by using
+                            python module BeautifulSoup. We scrap mobiles data from Flipkart Website and display
+                            data on HTML Website template. In this project there is login authentication system, the
+                            user can check mobile prices and details by login to MobileStore website if user want to
+                            buy mobile it will redirect to Flipkart website.</p>
+                        <p><span>Requirements: </span>HTML, CSS, Java Script, Python, Django, SQL Lite</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card">
+                    <div id="box">
+                        <h3><a href="#" target="_blank"><i class="fa-brands fa-github"></i> Exploratory Data Analysis on
+                                Zomato Dataset</a></h3>
+                        <p>In This Project we download data from Kaggle Website and did EDA using Pandas and NumPy
+                            for Data Preprocessing and using Matplotlib we did Data Visualization</p>
+                        <p><span>Requirements: </span>Python, Pandas, NumPy, Matplotlib, Jupyter Notebook</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card">
+                    <div id="box">
+                        <h3><a href="#" target="_blank"><i class="fa-brands fa-github"></i> Bank Management System</a>
+                        </h3>
+                        <p>Simple Banking System project is a simple project developed using Python. The project
+                            contains only the admin side. The admin side manages all the basic functions which
+                            include creating a new account, view account holder’s record, withdrawls and deposit
+                            amount, balance inquiries, and so on. In this mini-project, there is no such login
+                            system. This means he/she can use all those available features easily without any
+                            restriction. It is too easy to use, the user can check the total bank account record.
+                        </p>
+                        <p><span>Requirements: </span>Python, Date Time Module</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </projects>
+
+    <!-- project section end -->
+
+    <!-- contact section start -->
+
+    <contact id="contact">
+        <h2 class="heading"><i class="fas fa-headset"></i> Get in <span>Touch</span></h2>
+        <div class="container">
+            <form>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="name">Name: </label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" placeholder="Enter Your name" id="self-name" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="email">Email: </label>
+                    </div>
+                    <div class="col-75">
+                        <input type="email" placeholder="Enter Email Address" id="email" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="mobile">Mobile Number: </label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" placeholder="Enter Mobile Number" id="mobile" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="message">Message</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea name="message" placeholder="Message" style="height:200px" id="message"
+                            required></textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <input type="submit" value="Submit" onclick="validate()">
+                </div>
+            </form>
+        </div>
+    </contact>
+
+    <!-- contact section end -->
+
+    <!-- footer section start -->
+
+    <footer>
+        <div class="box-container">
+
+            <div class="box">
+                <h3>Hruday's Portfolio</h3>
+                <p>Thank you for visiting my personal portfolio website. Connect with me over socials. <br /> <br /></p>
+            </div>
+
+            <div class="box">
+                <h3>Quick Links</h3>
+                <a href="#home"><i class="fas fa-chevron-circle-right"></i> Home</a>
+                <a href="#about"><i class="fas fa-chevron-circle-right"></i> About</a>
+                <a href="#skills"><i class="fas fa-chevron-circle-right"></i> Skills</a>
+
+            </div>
+
+            <div class="box">
+                <h3>Contact info</h3>
+                <p> <i class="fas fa-phone"></i>+91-8500525732</p>
+                <p> <i class="fas fa-envelope"></i>hrudaykumar96@gmail.com</p>
+                <p> <i class="fas fa-map-marked-alt"></i>Visakhapatnam, India-530008</p>
+                <div class="share">
+
+                    <a href="#" class="fab fa-linkedin" aria-label="LinkedIn" target="_blank"></a>
+                    <a href="#" class="fab fa-github" aria-label="GitHub" target="_blank"></a>
+                    <a href="#" class="fas fa-envelope" aria-label="Mail" target="_blank"></a>
+                    <a href="#" class="fab fa-twitter" aria-label="Twitter" target="_blank"></a>
+                    <a href="#" class="fab fa-telegram-plane" aria-label="Telegram" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="credit">Designed with <i class="fa-solid fa-copyright"></i> by <a href="#"> Hruday Kumar</a></h1>
+
+    </footer>
+
+    <!-- footer section end -->
+
+    <!-- scroll top btn -->
+    <a href="#home" aria-label="ScrollTop" class="fas fa-angle-up" id="scroll-top"></a>
+    <!-- scroll back to top -->
+
+    <!-- ==== ALL MAJOR JAVASCRIPT CDNS STARTS ==== -->
+    <!-- jquery cdn link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- jquery ripples cdn link -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery.ripples@0.6.3/dist/jquery.ripples-min.min.js"></script>
+    <!-- vanilla tilt.js links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <!-- typed.js cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js"></script>
+    <!-- scroll reveal anim -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- ==== ALL MAJOR JAVASCRIPT CDNS ENDS ==== -->
+
+    <!-- custom js link -->
+    <script src="script.js"></script>
+</body>
+
+</html>
