@@ -37,10 +37,10 @@ export default function Header() {
   const logoutUser = async()=>{
     setLoading(true);
     const response = await axios.post('/api/logout');
+    setMobileMenuOpen(false);
     if(response?.data){
       if(response.data.error){
         setIsLogin(true);
-        setMobileMenuOpen(false);
         toast.error(response.data.error);
         setLoading(false);
       }else if(response.data.success){
