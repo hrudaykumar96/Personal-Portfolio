@@ -48,6 +48,7 @@ export default function Header() {
         toast.success(response.data.success);
         setLoading(false)
         router.replace('/login');
+        window.location.reload();
       }
     }
   }
