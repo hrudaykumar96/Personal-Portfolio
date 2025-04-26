@@ -114,9 +114,12 @@ const AboutPage = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
                 >
-                  <div className="text-center">
-                    <span className="text-teal-500 text-xl font-semibold">{skill}</span>
-                  </div>
+                  <div className="text-center flex flex-col gap-5">
+                    <span className="text-teal-500 text-xl font-semibold">{skill?.name}</span>
+                    { skill?.imageURL && 
+                    <Image src={skill?.imageURL || null} height={500} width={500} alt={skill?.name || null} className="rounded"/>
+                  }
+                    </div>
                 </motion.div>
               ))}
             </div>

@@ -1,19 +1,21 @@
-import React from 'react';
-import { FiPlus, FiTrash } from 'react-icons/fi'; // Optional: you can use icons for a more modern UI
+import React from "react";
+import { FiPlus, FiTrash } from "react-icons/fi";
+import Image from "next/image";
 
-const Experience = ({ formik }) => {
+const Experience = ({ formik, data }) => {
   // Function to handle adding a new experience entry
   const handleAddExperience = () => {
     formik.setFieldValue("experience", [
-      { title: '', name: '', start: '', end: '', present: false },
+      { title: "", name: "", start: "", end: "", present: false, image: null },
       ...formik.values.experience,
     ]);
   };
 
-
   // Function to handle removing an experience entry
   const handleRemoveExperience = (index) => {
-    const newExperience = formik.values.experience.filter((_, i) => i !== index);
+    const newExperience = formik.values.experience.filter(
+      (_, i) => i !== index
+    );
     formik.setFieldValue("experience", newExperience);
   };
 
@@ -36,10 +38,22 @@ const Experience = ({ formik }) => {
 
       {/* Render dynamic list of experience entries */}
       {formik.values.experience.map((_, index) => (
-        <div key={index} className={`mb-6 ${formik.values.experience.length > 1 ? 'border-b border-gray-300 pb-6' : ''}`}>
+        <div
+          key={index}
+          className={`mb-6 ${
+            formik.values.experience.length > 1
+              ? "border-b border-gray-300 pb-6"
+              : ""
+          }`}
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="mb-3">
-              <label htmlFor={`experience[${index}].title`} className="block text-xl font-semibold text-gray-300">Job Title</label>
+              <label
+                htmlFor={`experience[${index}].title`}
+                className="block text-xl font-semibold text-gray-300"
+              >
+                Job Title
+              </label>
               <input
                 type="text"
                 placeholder="Enter Job Title"
@@ -48,12 +62,16 @@ const Experience = ({ formik }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                
               />
             </div>
 
             <div className="mb-3">
-              <label htmlFor={`experience[${index}].name`} className="block text-xl font-semibold text-gray-300">Company Name</label>
+              <label
+                htmlFor={`experience[${index}].name`}
+                className="block text-xl font-semibold text-gray-300"
+              >
+                Company Name
+              </label>
               <input
                 type="text"
                 placeholder="Enter Company Name"
@@ -62,12 +80,16 @@ const Experience = ({ formik }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                
               />
             </div>
 
             <div className="mb-3">
-              <label htmlFor={`experience[${index}].start`} className="block text-xl font-semibold text-gray-300">Start Date</label>
+              <label
+                htmlFor={`experience[${index}].start`}
+                className="block text-xl font-semibold text-gray-300"
+              >
+                Start Date
+              </label>
               <input
                 type="date"
                 name={`experience[${index}].start`}
@@ -75,12 +97,16 @@ const Experience = ({ formik }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                
               />
             </div>
 
             <div className="mb-3">
-              <label htmlFor={`experience[${index}].end`} className="block text-xl font-semibold text-gray-300">End Date</label>
+              <label
+                htmlFor={`experience[${index}].end`}
+                className="block text-xl font-semibold text-gray-300"
+              >
+                End Date
+              </label>
               <input
                 type="date"
                 name={`experience[${index}].end`}
@@ -88,23 +114,80 @@ const Experience = ({ formik }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                
-                disabled={formik.values.experience[index].present ? true : false}
+                disabled={
+                  formik.values.experience[index].present ? true : false
+                }
               />
             </div>
           </div>
+
+          <div className="mb-3">
+            <label
+              htmlFor={`experience[${index}]`}
+              className="block text-xl font-semibold text-gray-300"
+            >
+              Image
+            </label>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              name={`experience[${index}].image`}
+              onChange={(event) => {
+                const file = event.currentTarget.files[0];
+                formik.setFieldValue(`experience[${index}].image`, file);
+              }}
+              onBlur={formik.handleBlur}
+              className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+            />
+          </div>
+          {formik?.values?.experience[index]?.image ? (
+            <div className="mt-4">
+              <Image
+                src={URL.createObjectURL(
+                  formik?.values?.experience[index]?.image
+                )}
+                alt="Education image preview"
+                width={200}
+                height={150}
+                className="w-60 h-50"
+              />
+            </div>
+          ) : data?.experience?.[index]?.imageURL ? (
+            <div className="mt-4">
+              <Image
+                src={data?.experience[index]?.imageURL}
+                alt="Saved education image"
+                width={200}
+                height={150}
+                className="w-60 h-50"
+              />
+            </div>
+          ) : null}
 
           {/* Checkbox for "Currently Working" */}
           <div className="mb-3 inline-flex">
             <input
               type="checkbox"
               name={`experience[${index}].present`}
-              checked={formik.values.experience[index].present === 'true' || formik.values.experience[index].present === true}
-              onChange={(e) => formik.setFieldValue(`experience[${index}].present`, e.target.checked)}
+              checked={
+                formik.values.experience[index].present === "true" ||
+                formik.values.experience[index].present === true
+              }
+              onChange={(e) =>
+                formik.setFieldValue(
+                  `experience[${index}].present`,
+                  e.target.checked
+                )
+              }
               onBlur={formik.handleBlur}
               className="mr-2 h-5 w-5 text-teal-500 focus:ring-teal-500"
             />
-            <label htmlFor={`experience[${index}].present`} className="text-xl font-semibold text-gray-300">Currently Working</label>
+            <label
+              htmlFor={`experience[${index}].present`}
+              className="text-xl font-semibold text-gray-300"
+            >
+              Currently Working
+            </label>
           </div>
 
           {/* Remove button */}

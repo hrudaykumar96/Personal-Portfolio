@@ -2,7 +2,7 @@ import React from "react";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import Image from "next/image";
 
-const Certifications = ({ formik }) => {
+const Certifications = ({ formik, data }) => {
   // Function to handle adding a new certification entry
   const handleAddCertification = () => {
     formik.setFieldValue("certifications", [
@@ -128,16 +128,29 @@ const Certifications = ({ formik }) => {
           </div>
 
           {/* Show image preview after uploading */}
-          {formik.values.certifications[index].image && (
+          {formik?.values?.certifications[index]?.image ? (
             <div className="mt-4">
               <Image
-                src={URL.createObjectURL(formik.values.certifications[index].image)}
-                alt="Certification image preview"
-                width={200} height={150}
+                src={URL.createObjectURL(
+                  formik?.values?.certifications[index]?.image
+                )}
+                alt="Education image preview"
+                width={200}
+                height={150}
                 className="w-60 h-50"
               />
             </div>
-          )}
+          ) : data?.certifications?.[index]?.imageURL ? (
+            <div className="mt-4">
+              <Image
+                src={data?.certifications[index]?.imageURL}
+                alt="Saved education image"
+                width={200}
+                height={150}
+                className="w-60 h-50"
+              />
+            </div>
+          ) : null}
 
           {/* Remove button */}
           {formik.values.certifications.length > 1 && (

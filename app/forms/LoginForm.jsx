@@ -8,6 +8,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { useState } from "react";
 import ButtonLoader from "../effects/ButtonLoader";
+import LoadingSpinner from "../effects/LoadingSpinner";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -96,6 +97,8 @@ const LoginPage = () => {
       }
     },
   });
+
+  if(loading) return(<LoadingSpinner/>)
 
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center overflow-hidden">

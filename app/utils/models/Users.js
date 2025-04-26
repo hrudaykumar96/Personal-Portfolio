@@ -119,12 +119,30 @@ const UsersSchema = new mongoose.Schema({
                 type: String,
                 required: false,
             },
+            imageURL: { 
+                type: String,
+                required: false,
+            },
+            imagePublic_id:{
+                type: String,
+                required: false,
+            }
         }
     ],
     skills:[
         {
-            type: String,
-            required: false
+            name:{
+                type: String,
+                required: false
+            },
+            imageURL: { 
+                type: String,
+                required: false,
+            },
+            imagePublic_id:{
+                type: String,
+                required: false,
+            }
         }
 
     ],

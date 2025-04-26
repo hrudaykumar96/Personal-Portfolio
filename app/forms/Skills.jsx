@@ -1,10 +1,17 @@
-import React from 'react';
-import { FiPlus, FiTrash } from 'react-icons/fi'; 
+import React from "react";
+import { FiPlus, FiTrash } from "react-icons/fi";
+import Image from "next/image";
 
-const Skills = ({ formik }) => {
+const Skills = ({ formik, data }) => {
   // Function to handle adding a new skill entry at the top
   const handleAddSkill = () => {
-    formik.setFieldValue("skills", ['', ...formik.values.skills]);
+    formik.setFieldValue("skills", [
+      {
+        name: "",
+        image: null,
+      },
+      ...formik.values.skills,
+    ]);
   };
 
   // Function to handle removing a skill entry
@@ -32,19 +39,71 @@ const Skills = ({ formik }) => {
 
       {/* Render dynamic list of skill entries */}
       {formik.values.skills.map((skill, index) => (
-        <div key={index} className={`mb-6 ${formik.values.skills.length > 1 ? 'border-b border-gray-300 pb-6' : ''}`}>
+        <div
+          key={index}
+          className={`mb-6 ${
+            formik.values.skills.length > 1
+              ? "border-b border-gray-300 pb-6"
+              : ""
+          }`}
+        >
           <div className="mb-3">
-            <label htmlFor={`skills[${index}]`} className="block text-xl font-semibold text-gray-300">Skill</label>
+            <label
+              htmlFor={`skills[${index}]`}
+              className="block text-xl font-semibold text-gray-300"
+            >
+              Skill
+            </label>
             <input
               type="text"
               placeholder="Enter Skill"
-              name={`skills[${index}]`}
-              value={skill}
+              name={`skills[${index}].name`}
+              value={formik.values.skills[index].name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
             />
           </div>
+          <div className="mb-3">
+            <label
+              htmlFor={`skills[${index}]`}
+              className="block text-xl font-semibold text-gray-300"
+            >
+              Image
+            </label>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              name={`skills[${index}].image`}
+              onChange={(event) => {
+                const file = event.currentTarget.files[0];
+                formik.setFieldValue(`skills[${index}].image`, file);
+              }}
+              onBlur={formik.handleBlur}
+              className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+            />
+          </div>
+          {formik?.values?.skills[index]?.image ? (
+            <div className="mt-4">
+              <Image
+                src={URL.createObjectURL(formik?.values?.skills[index]?.image)}
+                alt="Education image preview"
+                width={200}
+                height={150}
+                className="w-60 h-50"
+              />
+            </div>
+          ) : data?.skills?.[index]?.imageURL ? (
+            <div className="mt-4">
+              <Image
+                src={data?.skills[index]?.imageURL}
+                alt="Saved education image"
+                width={200}
+                height={150}
+                className="w-60 h-50"
+              />
+            </div>
+          ) : null}
 
           {/* Remove button */}
           {formik.values.skills.length > 1 && (

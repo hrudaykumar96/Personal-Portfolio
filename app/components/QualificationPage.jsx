@@ -29,20 +29,22 @@ const QualificationPage = () => {
           { data?.education?.length > 0 && data?.education?.map((qualification, index) =>(
             <div key={index}>
             <motion.div
-            className="bg-gray-800 text-white p-6 rounded-lg shadow-xl flex flex-col md:flex-row items-center space-x-0 md:space-x-6 hover:scale-105 transform transition-all duration-300 ease-in-out"
+            className="relative bg-gray-800 text-white p-6 rounded-lg shadow-xl flex flex-col md:flex-row items-center space-x-0 md:space-x-6 hover:scale-105 transform transition-all duration-300 ease-in-out"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
             viewport={{ once: true }}
           >
             { qualification?.imageURL && 
+            <div className="relative p-2.5 shrink-0 overflow-hidden w-36">
             <Image
               src={qualification?.imageURL}
               alt=""
               width={100}
               height={100}
-              className="object-fill mix-blend-multiply w-24 h-24 md:w-32 md:h-32"
+              className="h-full w-full rounded-md md:rounded-lg object-cover"
             />
+            </div>
           }
             <div className="text-center md:text-left mt-4 md:mt-0">
               <h3 className="text-xl font-semibold text-teal-500">
@@ -79,20 +81,22 @@ const QualificationPage = () => {
           { data?.certifications?.length > 0 && data?.certifications?.map((certification, index)=>(
             <div key={index}>
             <motion.div
-            className="bg-gray-800 text-white p-6 rounded-lg shadow-xl flex flex-col md:flex-row items-center space-x-0 md:space-x-6 hover:scale-105 transform transition-all duration-300 ease-in-out"
+            className="relative bg-gray-800 text-white p-6 rounded-lg shadow-xl flex flex-col md:flex-row items-center space-x-0 md:space-x-6 hover:scale-105 transform transition-all duration-300 ease-in-out"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.5 }}
             viewport={{ once: true }}
           >
             { certification?.imageURL && 
+            <div className="relative p-2.5 shrink-0 overflow-hidden w-36">
             <Image
               src={certification?.imageURL}
               alt={certification?.name}
               width={100}
               height={100}
-              className="object-fill mix-blend-multiply w-24 h-24 md:w-32 md:h-32"
+              className="h-full w-full rounded-md md:rounded-lg object-cover"
             />
+            </div>
           }
             <div className="text-center md:text-left mt-4 md:mt-0">
               <h3 className="text-xl font-semibold text-teal-500">

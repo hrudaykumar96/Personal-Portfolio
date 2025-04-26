@@ -15,14 +15,14 @@ import axios from "axios";
 import { useData } from "../context/contextProvider";
 import Experience from "./Experience";
 import ButtonLoader from "../effects/ButtonLoader";
-import moment from 'moment';
+import moment from "moment";
 
 const AdminForm = () => {
   const [steps, setSteps] = useState(1);
   const [loading, setLoading] = useState(true);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [inputFieldValue, setInputFieldValue] = useState(null);
-  const { setData } = useData();
+  const { data, setData } = useData();
   const router = useRouter();
   const { setIsLogin } = useData();
 
@@ -43,13 +43,13 @@ const AdminForm = () => {
           setIsLogin(true);
           setInputFieldValue(response?.data?.success);
           setLoading(false);
-          router.push('/administration');
+          router.push("/administration");
         } else if (response?.data?.error) {
           setIsLogin(false);
           toast.error(response?.data?.error);
           setLoading(false);
           setInputFieldValue(null);
-          router.push('/login');
+          router.push("/login");
         }
       } else {
         setLoading(false); // Ensure we handle loading state correctly
@@ -60,11 +60,11 @@ const AdminForm = () => {
 
   // Move to the next section
   const nextSteps = () => {
-    if (steps < 6) { // Make sure next step is only until step 5
+    if (steps < 6) {
+      // Make sure next step is only until step 5
       setSteps(steps + 1);
     }
   };
-
 
   // Form submission
   const onSubmit = async (values) => {
@@ -72,13 +72,13 @@ const AdminForm = () => {
     const formData = new FormData();
 
     // Personal Information
-    formData.append('name', values.name);
-    formData.append('email', values.email);
-    formData.append('mobile', values.mobile);
-    formData.append('designation', values.designation);
-    formData.append('profile', values.profile);
-    formData.append('address', values.address);
-    formData.append('summary', values.summary);
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("mobile", values.mobile);
+    formData.append("designation", values.designation);
+    formData.append("profile", values.profile);
+    formData.append("address", values.address);
+    formData.append("summary", values.summary);
 
     // Handle Education (Append each field separately)
     values.education?.forEach((edu, index) => {
@@ -88,7 +88,7 @@ const AdminForm = () => {
       formData.append(`education[${index}].grade`, edu.grade || "");
       formData.append(`education[${index}].start`, edu.start || "");
       formData.append(`education[${index}].end`, edu.end || "");
-      
+
       // If an image exists, append it separately
       if (edu.image) {
         formData.append(`education[${index}].image`, edu.image);
@@ -98,9 +98,12 @@ const AdminForm = () => {
     // Handle Certifications (Append each field separately)
     values.certifications?.forEach((cert, index) => {
       formData.append(`certifications[${index}].name`, cert.name || "");
-      formData.append(`certifications[${index}].organization`, cert.organization || "");
+      formData.append(
+        `certifications[${index}].organization`,
+        cert.organization || ""
+      );
       formData.append(`certifications[${index}].issued`, cert.issued || "");
-      
+
       // If an image exists, append it separately
       if (cert.image) {
         formData.append(`certifications[${index}].image`, cert.image);
@@ -114,45 +117,51 @@ const AdminForm = () => {
       formData.append(`experience[${index}].start`, exp.start || "");
       formData.append(`experience[${index}].end`, exp.end || "");
       formData.append(`experience[${index}].present`, exp.present || "");
+      if (exp.image) {
+        formData.append(`experience[${index}].image`, exp.image);
+      }
     });
 
     // Handle Skills
-    values.skills?.forEach((skill) => {
-      formData.append('skills', skill);
+    values.skills?.forEach((skill, index) => {
+      formData.append(`skills[${index}].name`, skill?.name);
+      if (skill?.image) {
+        formData.append(`skills[${index}].image`, skill.image);
+      }
     });
 
     // Handle Social Links
-    formData.append('facebook', values.facebook);
-    formData.append('instagram', values.instagram);
-    formData.append('linkedin', values.linkedin);
-    formData.append('telegram', values.telegram);
-    formData.append('github', values.github);
-    formData.append('resume', values.resume);
+    formData.append("facebook", values.facebook);
+    formData.append("instagram", values.instagram);
+    formData.append("linkedin", values.linkedin);
+    formData.append("telegram", values.telegram);
+    formData.append("github", values.github);
+    formData.append("resume", values.resume);
 
     // Handle Technologies
-    const technologies = Array.isArray(values.technologies) ? values.technologies : [values.technologies];
+    const technologies = Array.isArray(values.technologies)
+      ? values.technologies
+      : [values.technologies];
     technologies.forEach((tech) => {
-      formData.append('technologies', tech);
+      formData.append("technologies", tech);
     });
 
+    const response = await axios.post("/api/updatedata", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
-
-      const response = await axios.post("/api/updatedata", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-      });
-
-      if (response?.data?.success) {
-        setInputFieldValue(response?.data?.success);
-        setData(response?.data?.success);
-        toast.success("Data updated successfully");
-        setButtonLoading(false);
-        // Redirect after submission
-      } else if(response?.data?.error){
-        toast.error(response?.data?.error);
-        setButtonLoading(false);
-      }
+    if (response?.data?.success) {
+      setInputFieldValue(response?.data?.success);
+      setData(response?.data?.success);
+      toast.success("Data updated successfully");
+      setButtonLoading(false);
+      // Redirect after submission
+    } else if (response?.data?.error) {
+      toast.error(response?.data?.error);
+      setButtonLoading(false);
+    }
   };
 
   const formik = useFormik({
@@ -164,10 +173,24 @@ const AdminForm = () => {
       profile: inputFieldValue?.profile || null,
       address: inputFieldValue?.address || "",
       summary: inputFieldValue?.summary || "",
-      education: inputFieldValue?.education || [{ school: "", degree: "", field: "", grade: "", start: "", end: "", image: null }],
-      certifications: inputFieldValue?.certifications || [{ name: "", organization: "", issued: "", image: null }],
-      experience: inputFieldValue?.experience || [{ title: "", name: "", start: "", end: "", present: "" }],
-      skills: inputFieldValue?.skills || [],
+      education: inputFieldValue?.education || [
+        {
+          school: "",
+          degree: "",
+          field: "",
+          grade: "",
+          start: "",
+          end: "",
+          image: null,
+        },
+      ],
+      certifications: inputFieldValue?.certifications || [
+        { name: "", organization: "", issued: "", image: null },
+      ],
+      experience: inputFieldValue?.experience || [
+        { title: "", name: "", start: "", end: "", present: "", image: null },
+      ],
+      skills: inputFieldValue?.skills || [{ name: "", image: null }],
       facebook: inputFieldValue?.facebook || "",
       instagram: inputFieldValue?.instagram || "",
       linkedin: inputFieldValue?.linkedin || "",
@@ -196,30 +219,68 @@ const AdminForm = () => {
       formik.setFieldValue("address", inputFieldValue?.address || "");
       formik.setFieldValue("summary", inputFieldValue?.summary || "");
 
-      formik.setFieldValue("education", inputFieldValue?.education?.map((educationItem) => {
-        return {
-          ...educationItem,
-          start: educationItem.start ? moment(educationItem.start).format('YYYY-MM-DD') : "",
-          end: educationItem.end ? moment(educationItem.end).format('YYYY-MM-DD') : "",
-        };
-      }) || [{ school: "", degree: "", field: "", grade: "", start: "", end: "", image: null }]);
+      formik.setFieldValue(
+        "education",
+        inputFieldValue?.education?.map((educationItem) => {
+          return {
+            ...educationItem,
+            start: educationItem.start
+              ? moment(educationItem.start).format("YYYY-MM-DD")
+              : "",
+            end: educationItem.end
+              ? moment(educationItem.end).format("YYYY-MM-DD")
+              : "",
+          };
+        }) || [
+          {
+            school: "",
+            degree: "",
+            field: "",
+            grade: "",
+            start: "",
+            end: "",
+            image: null,
+          },
+        ]
+      );
 
-      formik.setFieldValue("certifications", inputFieldValue?.certifications?.map((certificationItem) => {
-        return {
-          ...certificationItem,
-          issued: certificationItem.issued ? moment(certificationItem.issued).format('YYYY-MM-DD') : "",
-        };
-      }) || [{ name: "", organization: "", issued: "", image: null }]);
+      formik.setFieldValue(
+        "certifications",
+        inputFieldValue?.certifications?.map((certificationItem) => {
+          return {
+            ...certificationItem,
+            issued: certificationItem.issued
+              ? moment(certificationItem.issued).format("YYYY-MM-DD")
+              : "",
+          };
+        }) || [{ name: "", organization: "", issued: "", image: null }]
+      );
 
-      formik.setFieldValue("experience", inputFieldValue?.experience?.map((experienceItem) => {
-        return {
-          ...experienceItem,
-          start: experienceItem.start ? moment(experienceItem.start).format('YYYY-MM-DD') : "",
-          end: experienceItem.end ? moment(experienceItem.end).format('YYYY-MM-DD') : "", 
-        };
-      }) || [{ title: "", name: "", start: "", end: "", present: "" }]);
+      formik.setFieldValue(
+        "experience",
+        inputFieldValue?.experience?.map((experienceItem) => {
+          return {
+            ...experienceItem,
+            start: experienceItem.start
+              ? moment(experienceItem.start).format("YYYY-MM-DD")
+              : "",
+            end: experienceItem.end
+              ? moment(experienceItem.end).format("YYYY-MM-DD")
+              : "",
+          };
+        }) || [
+          { title: "", name: "", start: "", end: "", present: "", image: null },
+        ]
+      );
 
-      formik.setFieldValue("skills", inputFieldValue?.skills || []);
+      formik.setFieldValue(
+        "skills",
+        inputFieldValue?.skills?.map((skill) => {
+          return {
+            ...skill,
+          };
+        }) || [{ name: "", image: null }]
+      );
       formik.setFieldValue("facebook", inputFieldValue?.facebook || "");
       formik.setFieldValue("instagram", inputFieldValue?.instagram || "");
       formik.setFieldValue("linkedin", inputFieldValue?.linkedin || "");
@@ -230,10 +291,9 @@ const AdminForm = () => {
     }
   }, [inputFieldValue]);
 
-
-  if (loading || buttonLoading){
-    return <LoadingSpinner />
-  };
+  if (loading || buttonLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="bg-gray-900 min-h-screen w-full flex items-center justify-center text-white">
@@ -244,24 +304,27 @@ const AdminForm = () => {
           encType="multipart/form-data"
         >
           {/* Personal information */}
-          {steps === 1 && <PersonalInformation formik={formik} />}
+          {steps === 1 && <PersonalInformation formik={formik} data={data} />}
 
           {/* Educational information */}
-          {steps === 2 && <EducationalInformation formik={formik} />}
+          {steps === 2 && (
+            <EducationalInformation formik={formik} data={data} />
+          )}
 
           {/* Certifications */}
           {steps === 3 && (
             <Certifications
               formik={formik}
               handleCertificationImageChange={handleCertificationImageChange}
+              data={data}
             />
           )}
 
-            {/* Experience */}
-          {steps === 4 && <Experience formik={formik} />}
+          {/* Experience */}
+          {steps === 4 && <Experience formik={formik} data={data} />}
 
           {/* skills */}
-          {steps === 5 && <Skills formik={formik} />}
+          {steps === 5 && <Skills formik={formik} data={data} />}
 
           {/* Other Information */}
           {steps === 6 && <Others formik={formik} />}
@@ -288,8 +351,9 @@ const AdminForm = () => {
                 >
                   Next <FaArrowRight className="ml-2" />
                 </button>
+              ) : buttonLoading ? (
+                <ButtonLoader />
               ) : (
-                 buttonLoading ? <ButtonLoader/> : 
                 <input
                   type="submit"
                   value="Submit"

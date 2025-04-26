@@ -14,6 +14,7 @@ export async function POST(req) {
   try {
     DbConnection();
     const formData = await req.formData();
+
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
     if (!token) return NextResponse.json({ error: "Token not found" });
@@ -93,24 +94,75 @@ export async function POST(req) {
       educationIndex++;
     }
 
+    const skillsData = [];
+    let skillsIndex = 0;
+    while (formData.has(`skills[${skillsIndex}].name`)) {
+      const name = formData.get(`skills[${skillsIndex}].name`) || "";
+      const image = formData.get(`skills[${skillsIndex}].image`) || null;
+
+      let imageResult;
+      if (image) {
+        if (user.skills[skillsIndex]?.imagePublic_id) {
+          await deleteUploadFile(user.skills[skillsIndex].imagePublic_id);
+        }
+        imageResult = await uploadToCloudinary(image);
+        skillsData.push({
+          name,
+          imageURL: imageResult?.secure_url,
+          imagePublic_id: imageResult?.public_id,
+        });
+      } else {
+        skillsData.push({
+          name,
+          imageURL: user.skills[skillsIndex]?.imageURL || "",
+          imagePublic_id: user.skills[skillsIndex]?.imagePublic_id || "",
+        });
+      }
+
+      skillsIndex++;
+    }
+
     const experienceData = [];
     let experienceIndex = 0;
-    while (formData.has(`experience[${experienceIndex}].title`)) {
+    while (formData.has(`experience[${experienceIndex}].name`)) {
       const title = formData.get(`experience[${experienceIndex}].title`) || "";
       const name = formData.get(`experience[${experienceIndex}].name`) || "";
       const start = formData.get(`experience[${experienceIndex}].start`) || "";
       const end = formData.get(`experience[${experienceIndex}].end`) || "";
       const present =
         formData.get(`experience[${experienceIndex}].present`) || "";
+      const image = formData.get(`experience[${experienceIndex}].image`) || null;
 
-      experienceData.push({
-        title,
-        name,
-        start: start ? new Date(start) : "",
-        end: end ? new Date(end) : "",
-        present,
-      });
+      let experienceResult;
+      if (image) {
+        if (user.experience[experienceIndex]?.imagePublic_id) {
+          await deleteUploadFile(
+            user.experience[experienceIndex].imagePublic_id
+          );
+        }
 
+        experienceResult = await uploadToCloudinary(image);
+        experienceData.push({
+          title,
+          name,
+          start: start ? new Date(start) : "",
+          end: end ? new Date(end) : "",
+          present,
+          imageURL: experienceResult?.secure_url,
+          imagePublic_id: experienceResult?.public_id,
+        });
+      } else {
+        experienceData.push({
+          title,
+          name,
+          start: start ? new Date(start) : "",
+          end: end ? new Date(end) : "",
+          present,
+          imageURL: user.experience[experienceIndex]?.imageURL || "",
+          imagePublic_id:
+            user.experience[experienceIndex]?.imagePublic_id || "",
+        });
+      }
       experienceIndex++;
     }
 
@@ -170,7 +222,7 @@ export async function POST(req) {
       (user.education = educationData || user.education),
       (user.experience = experienceData || user.experience),
       (user.certifications = certificationData || user.certifications),
-      (user.skills = formData.getAll("skills") || user.skills),
+      (user.skills = skillsData || user.skills),
       (user.facebook = formData.get("facebook") || user.facebook),
       (user.instagram = formData.get("instagram") || user.instagram),
       (user.linkedin = formData.get("linkedin") || user.linkedin),
