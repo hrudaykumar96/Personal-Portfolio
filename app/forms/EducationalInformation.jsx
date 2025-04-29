@@ -2,7 +2,7 @@ import React from "react";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import Image from "next/image";
 
-const EducationalInformation = ({ formik, data }) => {
+const EducationalInformation = ({ formik, data, theme }) => {
   // Function to handle adding a new education entry
 
   const handleAddEducation = () => {
@@ -29,7 +29,11 @@ const EducationalInformation = ({ formik, data }) => {
   return (
     <>
       <div className="text-center mb-5">
-        <h5 className="text-4xl font-semibold text-teal-400">
+        <h5
+          className={`text-4xl font-semibold ${
+            theme === "dark" ? "text-teal-400" : "text-indigo-600"
+          } `}
+        >
           Educational Information
         </h5>
       </div>
@@ -39,7 +43,11 @@ const EducationalInformation = ({ formik, data }) => {
         <button
           type="button"
           onClick={handleAddEducation}
-          className="flex items-center justify-center bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition-all"
+          className={`flex items-center justify-center ${
+            theme === "dark"
+              ? "bg-teal-500 text-white hover:bg-teal-600 focus:ring-teal-500"
+              : "bg-indigo-600 hover:bg-indigo-700 text-white"
+          } font-semibold py-2 px-4 rounded-lg  focus:outline-none focus:ring-2  focus:ring-opacity-50 transition-all`}
         >
           <FiPlus className="mr-2" /> Add Another
         </button>
@@ -59,7 +67,9 @@ const EducationalInformation = ({ formik, data }) => {
             <div className="mb-3">
               <label
                 htmlFor={`education[${index}].school`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 School
               </label>
@@ -70,14 +80,21 @@ const EducationalInformation = ({ formik, data }) => {
                 value={formik.values.education[index].school}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
               />
             </div>
 
             <div className="mb-3">
               <label
                 htmlFor={`education[${index}].degree`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 Degree
               </label>
@@ -88,14 +105,21 @@ const EducationalInformation = ({ formik, data }) => {
                 value={formik.values.education[index].degree}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
               />
             </div>
 
             <div className="mb-3">
               <label
                 htmlFor={`education[${index}].field`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 Field of Study
               </label>
@@ -106,14 +130,21 @@ const EducationalInformation = ({ formik, data }) => {
                 value={formik.values.education[index].field}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
               />
             </div>
 
             <div className="mb-3">
               <label
                 htmlFor={`education[${index}].grade`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 Grade
               </label>
@@ -124,14 +155,21 @@ const EducationalInformation = ({ formik, data }) => {
                 value={formik.values.education[index].grade}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
               />
             </div>
 
             <div className="mb-3">
               <label
                 htmlFor={`education[${index}].start`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 Start Date
               </label>
@@ -141,14 +179,21 @@ const EducationalInformation = ({ formik, data }) => {
                 value={formik.values.education[index].start}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
               />
             </div>
 
             <div className="mb-3">
               <label
                 htmlFor={`education[${index}].end`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 End Date
               </label>
@@ -158,7 +203,12 @@ const EducationalInformation = ({ formik, data }) => {
                 value={formik.values.education[index].end}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
               />
             </div>
           </div>
@@ -167,7 +217,9 @@ const EducationalInformation = ({ formik, data }) => {
           <div className="mb-6">
             <label
               htmlFor={`education[${index}].image`}
-              className="block text-xl font-semibold text-gray-300"
+              className={`block text-xl font-semibold ${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              } `}
             >
               Image
             </label>
@@ -181,13 +233,20 @@ const EducationalInformation = ({ formik, data }) => {
                   e.currentTarget.files[0]
                 )
               }
-              className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+              className={`w-full p-4 rounded-lg
+                ${
+                  theme === "dark"
+                    ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                    : "bg-gray-300 text-black"
+                }`}
             />
           </div>
           {formik?.values?.education[index]?.image ? (
             <div className="mt-4">
               <Image
-                src={URL.createObjectURL(formik?.values?.education[index]?.image)}
+                src={URL.createObjectURL(
+                  formik?.values?.education[index]?.image
+                )}
                 alt="Education image preview"
                 width={200}
                 height={150}

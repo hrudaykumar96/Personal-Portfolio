@@ -3,9 +3,11 @@
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { useEffect, useMemo, useState } from "react";
 import { loadSlim } from "@tsparticles/slim";
+import { useData } from "../context/contextProvider";
 
 const ParticlesComponent = (props) => {
   const [init, setInit] = useState(false);
+  const { theme } = useData();
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -43,10 +45,10 @@ const ParticlesComponent = (props) => {
       },
       particles: {
         color: {
-          value: "#FFFFFF", 
+          value: theme === "dark" ? "#FFFFFF" : "#000000", 
         },
         links: {
-          color: "#FFFFFF", 
+          color: theme === "dark" ? "#FFFFFF" : "#000000", 
           distance: 150,
           enable: true,
           opacity: 0.3,
@@ -59,7 +61,7 @@ const ParticlesComponent = (props) => {
             default: "bounce", 
           },
           random: true,
-          speed: 1,
+          speed: 3,
           straight: false,
         },
         number: {
@@ -80,7 +82,7 @@ const ParticlesComponent = (props) => {
       },
       detectRetina: true,
     }),
-    []
+    [theme]
   );
 
   return (

@@ -12,9 +12,8 @@ export async function POST(req) {
 
 
   try {
-    DbConnection();
+    await DbConnection();
     const formData = await req.formData();
-
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
     if (!token) return NextResponse.json({ error: "Token not found" });

@@ -7,7 +7,7 @@ import crypto from "crypto";
 
 export async function POST(req) {
   try {
-    DbConnection();
+    await DbConnection();
     const { email, password } = await req.json();
 
     const user = await User.findOne({ email });

@@ -1,11 +1,15 @@
 import React from "react";
 import Image from "next/image";
 
-const PersonalInformation = ({ formik, data }) => {
+const PersonalInformation = ({ formik, data, theme }) => {
   return (
     <>
       <div className="text-center mb-5">
-        <h5 className="text-4xl font-semibold text-teal-400">
+        <h5
+          className={`text-4xl font-semibold ${
+            theme === "dark" ? "text-teal-400" : "text-indigo-600"
+          } `}
+        >
           Personal Information
         </h5>
       </div>
@@ -14,7 +18,9 @@ const PersonalInformation = ({ formik, data }) => {
         <div className="mb-3">
           <label
             htmlFor="name"
-            className="block text-xl font-semibold text-gray-300"
+            className={`block text-xl font-semibold ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            } `}
           >
             Name
           </label>
@@ -25,14 +31,21 @@ const PersonalInformation = ({ formik, data }) => {
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+            className={`w-full p-4 rounded-lg
+              ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                  : "bg-gray-300 text-black"
+              }`}
           />
         </div>
 
         <div className="mb-3">
           <label
             htmlFor="email"
-            className="block text-xl font-semibold text-gray-300"
+            className={`block text-xl font-semibold ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            } `}
           >
             Email
           </label>
@@ -43,14 +56,21 @@ const PersonalInformation = ({ formik, data }) => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+            className={`w-full p-4 rounded-lg
+              ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                  : "bg-gray-300 text-black"
+              }`}
           />
         </div>
 
         <div className="mb-3">
           <label
             htmlFor="mobile"
-            className="block text-xl font-semibold text-gray-300"
+            className={`block text-xl font-semibold ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            } `}
           >
             Mobile
           </label>
@@ -61,14 +81,21 @@ const PersonalInformation = ({ formik, data }) => {
             value={formik.values.mobile}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+            className={`w-full p-4 rounded-lg
+              ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                  : "bg-gray-300 text-black"
+              }`}
           />
         </div>
 
         <div className="mb-3">
           <label
             htmlFor="designation"
-            className="block text-xl font-semibold text-gray-300"
+            className={`block text-xl font-semibold ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            } `}
           >
             Designation
           </label>
@@ -79,7 +106,12 @@ const PersonalInformation = ({ formik, data }) => {
             value={formik.values.designation}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+            className={`w-full p-4 rounded-lg
+              ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                  : "bg-gray-300 text-black"
+              }`}
           />
         </div>
       </div>
@@ -87,7 +119,9 @@ const PersonalInformation = ({ formik, data }) => {
       <div className="mb-3">
         <label
           htmlFor="profile"
-          className="block text-xl font-semibold text-gray-300"
+          className={`block text-xl font-semibold ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
+          } `}
         >
           Profile
         </label>
@@ -99,7 +133,12 @@ const PersonalInformation = ({ formik, data }) => {
             formik.setFieldValue("profile", e.currentTarget.files[0])
           }
           onBlur={formik.handleBlur}
-          className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+          className={`w-full p-4 rounded-lg
+            ${
+              theme === "dark"
+                ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                : "bg-gray-300 text-black"
+            }`}
         />
         {formik?.values?.profile ? (
           typeof formik.values.profile === "string" ? (
@@ -130,7 +169,9 @@ const PersonalInformation = ({ formik, data }) => {
       <div className="mb-3">
         <label
           htmlFor="location"
-          className="block text-xl font-semibold text-gray-300"
+          className={`block text-xl font-semibold ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
+          } `}
         >
           Address
         </label>
@@ -140,14 +181,21 @@ const PersonalInformation = ({ formik, data }) => {
           value={formik.values.address}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+          className={`w-full p-4 rounded-lg
+            ${
+              theme === "dark"
+                ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                : "bg-gray-300 text-black"
+            }`}
         />
       </div>
 
       <div className="mb-3">
         <label
           htmlFor="summary"
-          className="block text-xl font-semibold text-gray-300"
+          className={`block text-xl font-semibold ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
+          } `}
         >
           Summary
         </label>
@@ -157,7 +205,12 @@ const PersonalInformation = ({ formik, data }) => {
           value={formik.values.summary}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+          className={`w-full p-4 rounded-lg
+            ${
+              theme === "dark"
+                ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                : "bg-gray-300 text-black"
+            }`}
         />
       </div>
     </>

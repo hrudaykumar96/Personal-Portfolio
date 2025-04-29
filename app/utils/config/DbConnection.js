@@ -2,13 +2,13 @@
 
 import mongoose from "mongoose"
 
-const DbConnection = () => {
+const DbConnection = async() => {
     try {
-        mongoose.connect(process.env.NEXT_MONGO_URI);
+        await mongoose.connect(process.env.NEXT_MONGO_URI);
         console.log('Database connected')
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
 
-export default DbConnection
+export default DbConnection;

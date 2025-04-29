@@ -5,7 +5,7 @@ import DbConnection from "@/app/utils/config/DbConnection";
 export async function POST(req) {
 
   try {
-    DbConnection();
+    await DbConnection();
     const { email, otp } = await req.json();
     const user = await User.findOne({ email });
 

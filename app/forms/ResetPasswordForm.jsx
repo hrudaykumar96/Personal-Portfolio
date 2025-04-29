@@ -8,11 +8,14 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import ButtonLoader from "../effects/ButtonLoader";
 import axios from "axios";
+import { useData } from "../context/contextProvider";
+import LoadingSpinner from "../effects/LoadingSpinner";
 
 const ResetPasswordForm = () => {
   const [steps, setSteps] = useState(1);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { theme } = useData();
 
   const formik = useFormik({
     initialValues: {
@@ -73,7 +76,8 @@ const ResetPasswordForm = () => {
         if (!values.password) {
           errors.password = "Enter Password";
         } else if (values.password.length < 8 || values.password.length > 12) {
-          errors.password = "Password should be at least 8 characters and at most 12 characters";
+          errors.password =
+            "Password should be at least 8 characters and at most 12 characters";
         }
 
         if (!values.confirmPassword) {
@@ -89,57 +93,73 @@ const ResetPasswordForm = () => {
     onSubmit: async (values) => {
       setLoading(true);
 
-        if (steps === 1) {
-          const response = await axios.post("/api/resetpassword", {
-            email: formik.values.email,
-          });
-          if (response?.data?.success) {
-            setSteps(2);
-            toast.success(response?.data?.success);
-          } else if (response?.data?.Emailerror) {
-            setSteps(1);
-            formik.setFieldError("email", response?.data?.Emailerror);
-          } else if (response?.data?.error) {
-            setSteps(1);
-            toast.error(response?.data?.error);
-          }
-        } else if (steps === 2) {
-          const response = await axios.post("/api/verifypasswordotp", {
-            email: formik.values.email,
-            otp: formik.values.otp,
-          });
-          if (response?.data?.success) {
-            setSteps(3);
-            toast.success(response?.data?.success);
-          } else if (response?.data?.error) {
-            toast.error(response?.data?.error);
-          } else if(response?.data?.otperror){
-            formik.setFieldError("otp", response?.data?.otperror);
-          }
-        } else if (steps === 3) {
-          const response = await axios.post("/api/changepassword", {
-            email: formik.values.email,
-            password: formik.values.password,
-          });
-          if (response?.data?.success) {
-            router.replace("/login");
-            setSteps(1);
-            formik.resetForm();
-            toast.success(response?.data?.success);
-          } else if (response?.data?.error) {
-            toast.error(response?.data?.error);
-          }
+      if (steps === 1) {
+        const response = await axios.post("/api/resetpassword", {
+          email: formik.values.email,
+        });
+        if (response?.data?.success) {
+          setSteps(2);
+          toast.success(response?.data?.success);
+        } else if (response?.data?.Emailerror) {
+          setSteps(1);
+          formik.setFieldError("email", response?.data?.Emailerror);
+        } else if (response?.data?.error) {
+          setSteps(1);
+          toast.error(response?.data?.error);
         }
+      } else if (steps === 2) {
+        const response = await axios.post("/api/verifypasswordotp", {
+          email: formik.values.email,
+          otp: formik.values.otp,
+        });
+        if (response?.data?.success) {
+          setSteps(3);
+          toast.success(response?.data?.success);
+        } else if (response?.data?.error) {
+          toast.error(response?.data?.error);
+        } else if (response?.data?.otperror) {
+          formik.setFieldError("otp", response?.data?.otperror);
+        }
+      } else if (steps === 3) {
+        const response = await axios.post("/api/changepassword", {
+          email: formik.values.email,
+          password: formik.values.password,
+        });
+        if (response?.data?.success) {
+          router.replace("/login");
+          setSteps(1);
+          formik.resetForm();
+          toast.success(response?.data?.success);
+        } else if (response?.data?.error) {
+          toast.error(response?.data?.error);
+        }
+      }
       setLoading(false);
     },
   });
 
+  if (loading) return <LoadingSpinner />;
+
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center overflow-hidden">
+    <div
+      className={`${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100"
+      }  min-h-screen flex flex-col items-center overflow-hidden`}
+    >
       <section className="w-full py-16 px-6 md:px-16 mt-24 flex justify-center items-center">
-        <div className="max-w-md w-full bg-gray-800 p-8 rounded-lg shadow-xl backdrop-blur-md">
+        <div
+          className={`max-w-md w-full ${
+            theme === "dark" ? "bg-gray-800" : "bg-gray-50 shadow"
+          } p-8 rounded-lg shadow-xl backdrop-blur-md`}
+        >
           <div className="text-center space-y-6">
-            <h2 className="text-4xl font-semibold text-teal-400">Reset Password</h2>
+            <h2
+              className={`text-4xl font-semibold ${
+                theme === "dark" ? "text-teal-400" : "text-indigo-600"
+              } `}
+            >
+              Reset Password
+            </h2>
           </div>
 
           <form className="space-y-8 mt-8" onSubmit={formik.handleSubmit}>
@@ -147,7 +167,9 @@ const ResetPasswordForm = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-semibold text-gray-300"
+                  className={`block text-sm font-semibold ${
+                    theme === "dark" ? "text-gray-300" : "text-gray-700"
+                  } `}
                 >
                   Email
                 </label>
@@ -156,8 +178,16 @@ const ResetPasswordForm = () => {
                     id="email"
                     name="email"
                     type="email"
-                    className={`w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500 
-                      ${formik.touched.email && formik.errors.email ? "border-2 border-red-500" : "border border-transparent"}`}
+                    className={`w-full p-4 rounded-lg  ${
+                      theme === "dark"
+                        ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                        : "bg-gray-300 text-black"
+                    }
+                      ${
+                        formik.touched.email && formik.errors.email
+                          ? "border-2 border-red-500"
+                          : "border border-transparent"
+                      }`}
                     placeholder="Your Email"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -165,14 +195,21 @@ const ResetPasswordForm = () => {
                   />
                 </div>
                 {formik.touched.email && formik.errors.email && (
-                  <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.email}
+                  </div>
                 )}
               </div>
             )}
 
             {steps === 2 && (
               <div>
-                <label htmlFor="otp" className="block text-sm font-semibold text-gray-300">
+                <label
+                  htmlFor="otp"
+                  className={`block text-sm font-semibold ${
+                    theme === "dark" ? "text-gray-300" : "text-gray-700"
+                  } `}
+                >
                   OTP
                 </label>
                 <div className="flex items-center bg-gray-700 rounded-lg mt-2">
@@ -180,8 +217,16 @@ const ResetPasswordForm = () => {
                     id="otp"
                     name="otp"
                     type="password"
-                    className={`w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500 
-                      ${formik.touched.otp && formik.errors.otp ? "border-2 border-red-500" : "border border-transparent"}`}
+                    className={`w-full p-4 rounded-lg  ${
+                      theme === "dark"
+                        ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                        : "bg-gray-300 text-black"
+                    } 
+                      ${
+                        formik.touched.otp && formik.errors.otp
+                          ? "border-2 border-red-500"
+                          : "border border-transparent"
+                      }`}
                     placeholder="Enter OTP"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -189,7 +234,9 @@ const ResetPasswordForm = () => {
                   />
                 </div>
                 {formik.touched.otp && formik.errors.otp && (
-                  <div className="text-red-500 text-sm">{formik.errors.otp}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.otp}
+                  </div>
                 )}
               </div>
             )}
@@ -199,7 +246,9 @@ const ResetPasswordForm = () => {
                 <div>
                   <label
                     htmlFor="password"
-                    className="block text-sm font-semibold text-gray-300"
+                    className={`block text-sm font-semibold ${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    } `}
                   >
                     New Password
                   </label>
@@ -208,8 +257,16 @@ const ResetPasswordForm = () => {
                       id="password"
                       name="password"
                       type="password"
-                      className={`w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500 
-                        ${formik.touched.password && formik.errors.password ? "border-2 border-red-500" : "border border-transparent"}`}
+                      className={`w-full p-4 rounded-lg  ${
+                        theme === "dark"
+                          ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                          : "bg-gray-300 text-black"
+                      }
+                        ${
+                          formik.touched.password && formik.errors.password
+                            ? "border-2 border-red-500"
+                            : "border border-transparent"
+                        }`}
                       placeholder="New Password"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -217,14 +274,18 @@ const ResetPasswordForm = () => {
                     />
                   </div>
                   {formik.touched.password && formik.errors.password && (
-                    <div className="text-red-500 text-sm">{formik.errors.password}</div>
+                    <div className="text-red-500 text-sm">
+                      {formik.errors.password}
+                    </div>
                   )}
                 </div>
 
                 <div>
                   <label
                     htmlFor="confirmPassword"
-                    className="block text-sm font-semibold text-gray-300"
+                    className={`block text-sm font-semibold ${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    } `}
                   >
                     Confirm Password
                   </label>
@@ -233,17 +294,29 @@ const ResetPasswordForm = () => {
                       id="confirmPassword"
                       name="confirmPassword"
                       type="password"
-                      className={`w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500 
-                        ${formik.touched.confirmPassword && formik.errors.confirmPassword ? "border-2 border-red-500" : "border border-transparent"}`}
+                      className={`w-full p-4 rounded-lg  ${
+                        theme === "dark"
+                          ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                          : "bg-gray-300 text-black"
+                      }
+                        ${
+                          formik.touched.confirmPassword &&
+                          formik.errors.confirmPassword
+                            ? "border-2 border-red-500"
+                            : "border border-transparent"
+                        }`}
                       placeholder="Confirm New Password"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.confirmPassword}
                     />
                   </div>
-                  {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                    <div className="text-red-500 text-sm">{formik.errors.confirmPassword}</div>
-                  )}
+                  {formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.confirmPassword}
+                      </div>
+                    )}
                 </div>
               </>
             )}
@@ -253,7 +326,11 @@ const ResetPasswordForm = () => {
             ) : (
               <button
                 type="submit"
-                className="w-full py-3 px-6 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition-all duration-300"
+                className={`w-full py-3 px-6 font-semibold rounded-lg transition-all duration-300 ${
+                  theme === "dark"
+                    ? "bg-teal-500 text-white hover:bg-teal-600"
+                    : "text-white bg-indigo-600 hover:bg-indigo-700"
+                }`}
               >
                 {steps === 1
                   ? "Send OTP"
@@ -265,7 +342,12 @@ const ResetPasswordForm = () => {
           </form>
 
           <div className="text-center mt-6">
-            <Link href="/login" className="text-teal-400 hover:underline">
+            <Link
+              href="/login"
+              className={`${
+                theme === "dark" ? "text-teal-400" : "text-indigo-400"
+              }  hover:underline`}
+            >
               Back to Login
             </Link>
           </div>

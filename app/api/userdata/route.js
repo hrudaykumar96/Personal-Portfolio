@@ -7,7 +7,7 @@ import User from "@/app/utils/models/Users";
 
 export const GET = async(req)=>{
     try {
-        DbConnection();
+        await DbConnection();
         const cookieStore = await cookies();
         const token = cookieStore.get('token')?.value
         

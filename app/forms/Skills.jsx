@@ -2,7 +2,7 @@ import React from "react";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import Image from "next/image";
 
-const Skills = ({ formik, data }) => {
+const Skills = ({ formik, data, theme }) => {
   // Function to handle adding a new skill entry at the top
   const handleAddSkill = () => {
     formik.setFieldValue("skills", [
@@ -23,7 +23,13 @@ const Skills = ({ formik, data }) => {
   return (
     <>
       <div className="text-center mb-5">
-        <h5 className="text-4xl font-semibold text-teal-400">Skills</h5>
+        <h5
+          className={`text-4xl font-semibold ${
+            theme === "dark" ? "text-teal-400" : "text-indigo-600"
+          } `}
+        >
+          Skills
+        </h5>
       </div>
 
       {/* Add another skill button */}
@@ -31,7 +37,11 @@ const Skills = ({ formik, data }) => {
         <button
           type="button"
           onClick={handleAddSkill}
-          className="flex items-center justify-center bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition-all"
+          className={`flex items-center justify-center ${
+            theme === "dark"
+              ? "bg-teal-500 text-white hover:bg-teal-600 focus:ring-teal-500"
+              : "bg-indigo-600 hover:bg-indigo-700 text-white"
+          } font-semibold py-2 px-4 rounded-lg  focus:outline-none focus:ring-2  focus:ring-opacity-50 transition-all`}
         >
           <FiPlus className="mr-2" /> Add Another Skill
         </button>
@@ -50,7 +60,9 @@ const Skills = ({ formik, data }) => {
           <div className="mb-3">
             <label
               htmlFor={`skills[${index}]`}
-              className="block text-xl font-semibold text-gray-300"
+              className={`block text-xl font-semibold ${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              } `}
             >
               Skill
             </label>
@@ -61,13 +73,20 @@ const Skills = ({ formik, data }) => {
               value={formik.values.skills[index].name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+              className={`w-full p-4 rounded-lg
+                ${
+                  theme === "dark"
+                    ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                    : "bg-gray-300 text-black"
+                }`}
             />
           </div>
           <div className="mb-3">
             <label
               htmlFor={`skills[${index}]`}
-              className="block text-xl font-semibold text-gray-300"
+              className={`block text-xl font-semibold ${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              } `}
             >
               Image
             </label>
@@ -80,7 +99,12 @@ const Skills = ({ formik, data }) => {
                 formik.setFieldValue(`skills[${index}].image`, file);
               }}
               onBlur={formik.handleBlur}
-              className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+              className={`w-full p-4 rounded-lg
+                ${
+                  theme === "dark"
+                    ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                    : "bg-gray-300 text-black"
+                }`}
             />
           </div>
           {formik?.values?.skills[index]?.image ? (

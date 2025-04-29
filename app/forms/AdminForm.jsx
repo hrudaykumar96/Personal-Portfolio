@@ -22,9 +22,8 @@ const AdminForm = () => {
   const [loading, setLoading] = useState(true);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [inputFieldValue, setInputFieldValue] = useState(null);
-  const { data, setData } = useData();
+  const { data, setData, setIsLogin, theme } = useData();
   const router = useRouter();
-  const { setIsLogin } = useData();
 
   // Move to the previous section
   const prevSteps = () => {
@@ -296,19 +295,27 @@ const AdminForm = () => {
   }
 
   return (
-    <div className="bg-gray-900 min-h-screen w-full flex items-center justify-center text-white">
+    <div
+      className={`${
+        theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+      }  min-h-screen w-full flex items-center justify-center text-white`}
+    >
       <section className="w-full py-8 px-4 sm:px-6 md:px-16 mt-24 flex flex-col justify-center items-center">
         <form
-          className="max-w-6xl w-full bg-gray-800 p-6 sm:p-8 md:p-10 lg:p-12 rounded-lg shadow-xl backdrop-blur-md"
+          className={`max-w-6xl w-full ${
+            theme === "dark" ? "bg-gray-800" : "bg-white"
+          }  p-6 sm:p-8 md:p-10 lg:p-12 rounded-lg shadow-xl backdrop-blur-md`}
           onSubmit={formik.handleSubmit}
           encType="multipart/form-data"
         >
           {/* Personal information */}
-          {steps === 1 && <PersonalInformation formik={formik} data={data} />}
+          {steps === 1 && (
+            <PersonalInformation formik={formik} data={data} theme={theme} />
+          )}
 
           {/* Educational information */}
           {steps === 2 && (
-            <EducationalInformation formik={formik} data={data} />
+            <EducationalInformation formik={formik} data={data} theme={theme} />
           )}
 
           {/* Certifications */}
@@ -317,17 +324,20 @@ const AdminForm = () => {
               formik={formik}
               handleCertificationImageChange={handleCertificationImageChange}
               data={data}
+              theme={theme}
             />
           )}
 
           {/* Experience */}
-          {steps === 4 && <Experience formik={formik} data={data} />}
+          {steps === 4 && (
+            <Experience formik={formik} data={data} theme={theme} />
+          )}
 
           {/* skills */}
-          {steps === 5 && <Skills formik={formik} data={data} />}
+          {steps === 5 && <Skills formik={formik} data={data} theme={theme} />}
 
           {/* Other Information */}
-          {steps === 6 && <Others formik={formik} />}
+          {steps === 6 && <Others formik={formik} theme={theme} />}
 
           <div className="flex items-center justify-between mt-6 sm:mt-8">
             {/* Prev Button - Left */}
@@ -335,7 +345,11 @@ const AdminForm = () => {
               <button
                 type="button"
                 onClick={prevSteps}
-                className="px-4 py-2 sm:px-6 sm:py-3 text-lg sm:text-xl font-semibold bg-teal-500 hover:bg-teal-600 rounded-lg transition duration-200 flex items-center"
+                className={`px-4 py-2 sm:px-6 sm:py-3 text-lg sm:text-xl font-semibold ${
+                  theme === "dark"
+                    ? "bg-teal-500 hover:bg-teal-600"
+                    : "bg-indigo-600 hover:bg-indigo-700"
+                }  rounded-lg transition duration-200 flex items-center`}
               >
                 <FaArrowLeft className="mr-2" /> Prev
               </button>
@@ -347,7 +361,11 @@ const AdminForm = () => {
                 <button
                   type="button"
                   onClick={nextSteps}
-                  className="px-4 py-2 sm:px-6 sm:py-3 text-lg sm:text-xl font-semibold bg-teal-500 hover:bg-teal-600 rounded-lg transition duration-200 flex items-center"
+                  className={`px-4 py-2 sm:px-6 sm:py-3 text-lg sm:text-xl font-semibold ${
+                    theme === "dark"
+                      ? "bg-teal-500 hover:bg-teal-600"
+                      : "bg-indigo-600 hover:bg-indigo-700"
+                  }  rounded-lg transition duration-200 flex items-center`}
                 >
                   Next <FaArrowRight className="ml-2" />
                 </button>
@@ -357,7 +375,11 @@ const AdminForm = () => {
                 <input
                   type="submit"
                   value="Submit"
-                  className="cursor-pointer px-4 py-2 sm:px-6 sm:py-3 text-lg sm:text-xl font-semibold bg-teal-500 hover:bg-teal-600 rounded-lg transition duration-200"
+                  className={`cursor-pointer px-4 py-2 sm:px-6 sm:py-3 text-lg sm:text-xl font-semibold ${
+                    theme === "dark"
+                      ? "bg-teal-500 hover:bg-teal-600"
+                      : "bg-indigo-600 hover:bg-indigo-700"
+                  }  rounded-lg transition duration-200 flex items-center`}
                 />
               )}
             </div>

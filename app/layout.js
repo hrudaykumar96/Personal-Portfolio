@@ -5,6 +5,7 @@ import ParticlesComponent from "./effects/Particles";
 import { ToastContainer } from 'react-toastify';
 import { Zoom } from 'react-toastify';
 import { DataProvider } from "./context/contextProvider";
+import ToggleButton from "./components/ToggleButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({ children }) {
         <DataProvider>
           <ToastContainer position="top-center" theme="colored" transition={Zoom} />
              <Header/>
+             <ToggleButton/>
             <ParticlesComponent id="particles"/>
           {children}
         </DataProvider>

@@ -2,7 +2,7 @@ import React from "react";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import Image from "next/image";
 
-const Experience = ({ formik, data }) => {
+const Experience = ({ formik, data, theme }) => {
   // Function to handle adding a new experience entry
   const handleAddExperience = () => {
     formik.setFieldValue("experience", [
@@ -22,7 +22,13 @@ const Experience = ({ formik, data }) => {
   return (
     <>
       <div className="text-center mb-5">
-        <h5 className="text-4xl font-semibold text-teal-400">Experience</h5>
+        <h5
+          className={`text-4xl font-semibold ${
+            theme === "dark" ? "text-teal-400" : "text-indigo-600"
+          } `}
+        >
+          Experience
+        </h5>
       </div>
 
       {/* Add another experience entry button */}
@@ -30,7 +36,11 @@ const Experience = ({ formik, data }) => {
         <button
           type="button"
           onClick={handleAddExperience}
-          className="flex items-center justify-center bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition-all"
+          className={`flex items-center justify-center ${
+            theme === "dark"
+              ? "bg-teal-500 text-white hover:bg-teal-600 focus:ring-teal-500"
+              : "bg-indigo-600 hover:bg-indigo-700 text-white"
+          } font-semibold py-2 px-4 rounded-lg  focus:outline-none focus:ring-2  focus:ring-opacity-50 transition-all`}
         >
           <FiPlus className="mr-2" /> Add Another Experience
         </button>
@@ -50,7 +60,9 @@ const Experience = ({ formik, data }) => {
             <div className="mb-3">
               <label
                 htmlFor={`experience[${index}].title`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 Job Title
               </label>
@@ -61,14 +73,21 @@ const Experience = ({ formik, data }) => {
                 value={formik.values.experience[index].title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
               />
             </div>
 
             <div className="mb-3">
               <label
                 htmlFor={`experience[${index}].name`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 Company Name
               </label>
@@ -79,14 +98,21 @@ const Experience = ({ formik, data }) => {
                 value={formik.values.experience[index].name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
               />
             </div>
 
             <div className="mb-3">
               <label
                 htmlFor={`experience[${index}].start`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 Start Date
               </label>
@@ -96,14 +122,21 @@ const Experience = ({ formik, data }) => {
                 value={formik.values.experience[index].start}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
               />
             </div>
 
             <div className="mb-3">
               <label
                 htmlFor={`experience[${index}].end`}
-                className="block text-xl font-semibold text-gray-300"
+                className={`block text-xl font-semibold ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } `}
               >
                 End Date
               </label>
@@ -113,7 +146,12 @@ const Experience = ({ formik, data }) => {
                 value={formik.values.experience[index].end}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                className={`w-full p-4 rounded-lg
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                      : "bg-gray-300 text-black"
+                  }`}
                 disabled={
                   formik.values.experience[index].present ? true : false
                 }
@@ -124,7 +162,9 @@ const Experience = ({ formik, data }) => {
           <div className="mb-3">
             <label
               htmlFor={`experience[${index}]`}
-              className="block text-xl font-semibold text-gray-300"
+              className={`block text-xl font-semibold ${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              } `}
             >
               Image
             </label>
@@ -137,7 +177,12 @@ const Experience = ({ formik, data }) => {
                 formik.setFieldValue(`experience[${index}].image`, file);
               }}
               onBlur={formik.handleBlur}
-              className="w-full p-4 rounded-lg bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+              className={`w-full p-4 rounded-lg
+                ${
+                  theme === "dark"
+                    ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
+                    : "bg-gray-300 text-black"
+                }`}
             />
           </div>
           {formik?.values?.experience[index]?.image ? (
@@ -184,7 +229,9 @@ const Experience = ({ formik, data }) => {
             />
             <label
               htmlFor={`experience[${index}].present`}
-              className="text-xl font-semibold text-gray-300"
+              className={`block text-xl font-semibold ${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              } `}
             >
               Currently Working
             </label>

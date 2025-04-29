@@ -8,7 +8,7 @@ import nodemailer from "nodemailer";
 export async function POST(req) {
 
     try {
-        DbConnection();
+        await DbConnection();
         const { email } = await req.json();
         const user = await User.findOne({email});
         if(!user) return NextResponse.json({ Emailerror: 'Email not Registered'});

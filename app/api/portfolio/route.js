@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export const GET = async () => {
     try {
-        DbConnection();
+        await DbConnection();
         const data = await User.findOne();
         
         data.education.sort((a, b) => new Date(b.start) - new Date(a.start));

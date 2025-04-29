@@ -12,7 +12,7 @@ import LoadingSpinner from "../effects/LoadingSpinner";
 const HomePage = () => {
   const [typedReady, setTypedReady] = useState(false);
   const [nameColor, setNameColor] = useState("text-white");
-  const { loading, data } = useData();
+  const { loading, data, theme } = useData();
 
   
 
@@ -43,27 +43,37 @@ const HomePage = () => {
     {
       name: 'Facebook',
       href: `${data?.facebook}`,
-      icon: <FaFacebook className="h-8 w-8 text-gray-400 hover:text-gray-300" />,
+      icon: <FaFacebook className={`h-8 w-8 ${
+        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
+      } transition-all duration-300`} />,
     },
     {
       name: 'LinkedIn',
       href: `${data?.linkedin}`,
-      icon: <FaLinkedin className="h-8 w-8 text-gray-400 hover:text-gray-300" />,
+      icon: <FaLinkedin className={`h-8 w-8 ${
+        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
+      } transition-all duration-300`} />,
     },
     {
       name: 'Instagram',
       href: `${data?.instagram}`,
-      icon: <FaInstagram className="h-8 w-8 text-gray-400 hover:text-gray-300" />,
+      icon: <FaInstagram className={`h-8 w-8 ${
+        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
+      } transition-all duration-300`} />,
     },
     {
       name: 'GitHub',
       href: `${data?.github}`,
-      icon: <FaGithub className="h-8 w-8 text-gray-400 hover:text-gray-300" />,
+      icon: <FaGithub className={`h-8 w-8 ${
+        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
+      } transition-all duration-300`} />,
     },
     {
       name: 'Telegram',
       href: `${data?.telegram}`,
-      icon: <FaTelegram className="h-8 w-8 text-gray-400 hover:text-gray-300" />,
+      icon: <FaTelegram className={`h-8 w-8 ${
+        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
+      } transition-all duration-300`} />,
     },
   ];
 
@@ -71,7 +81,7 @@ const HomePage = () => {
   if(loading) return <LoadingSpinner/>
 
   return (
-    <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 md:px-8">
+    <div className={`${theme === "dark" ? 'bg-gray-900' : 'bg-gray-100'}  min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 md:px-8`}>
 
       <motion.div
         className="flex flex-col-reverse md:flex-row items-center justify-between w-full max-w-7xl space-y-8 md:space-y-0 md:space-x-12 gap-5"
@@ -81,7 +91,7 @@ const HomePage = () => {
         viewport={{ once: true }}
       >
         <div className="text-center md:text-left text-white space-y-6 md:space-y-8">
-          <h4 className="text-lg sm:text-xl font-semibold text-gray-400 uppercase tracking-wider">Hello, I'm</h4>
+          <h4 className={`text-lg sm:text-xl font-semibold ${theme === "dark" ? "text-gray-400" : 'text-gray-800'}  uppercase tracking-wider`}>Hello, I'm</h4>
           
           {/* Name Text with Animated Color Change */}
           <motion.p
@@ -97,7 +107,7 @@ const HomePage = () => {
           {/* Typewriter Text Animation */}
           {typedReady && (
             <motion.div
-              className="relative overflow-hidden text-gray-400 text-xl sm:text-2xl md:text-3xl font-medium"
+              className={`relative overflow-hidden ${theme === 'dark' ? 'text-gray-400' : 'text-gray-800'}  text-xl sm:text-2xl md:text-3xl font-medium`}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 1, duration: 1 }}
@@ -149,7 +159,7 @@ const HomePage = () => {
           transition={{ delay: 2, duration: 1 }}
           viewport={{ once: true }}
         >
-          <div className="rounded-full overflow-hidden w-full h-full border-4 border-teal-500 bg-teal-500">
+          <div className={`rounded-full overflow-hidden w-full h-full border-4 ${theme === "dark" ? 'border-teal-500 bg-teal-500' : 'shadow-lg' } `}>
             { data?.profileURL && 
              <Image
               src={data.profileURL}

@@ -4,7 +4,7 @@ import DbConnection from "@/app/utils/config/DbConnection";
 
 export const POST=async(req)=>{
     try {
-        DbConnection();
+        await DbConnection();
         const token = req.cookies.get('token');
         const cookieStore = await cookies();
         if(!token) return NextResponse.json({ error:'Token not found'})
