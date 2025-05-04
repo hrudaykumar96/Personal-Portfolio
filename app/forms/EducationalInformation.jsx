@@ -1,285 +1,212 @@
-import React from "react";
-import { FiPlus, FiTrash } from "react-icons/fi";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
+import { FaPlusCircle, FaPencilAlt } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import AddEducation from "./AddEducation";
+import DeleteModal from "../effects/DeleteModal";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Loader from "../effects/Loader";
 
-const EducationalInformation = ({ formik, data, theme }) => {
-  // Function to handle adding a new education entry
+const EducationalInformation = ({ userData, setUserData }) => {
+  const [openForm, setOpenForm] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [dataToDelete, setDataToDelete] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [dataToUpdate, setDataToUpdate] = useState(null);
 
-  const handleAddEducation = () => {
-    formik.setFieldValue("education", [
-      {
-        school: "",
-        degree: "",
-        field: "",
-        grade: "",
-        start: "",
-        end: "",
-        image: null,
-      },
-      ...formik.values.education,
-    ]);
+  const openDeletePopup =(id)=>{
+    if(id){
+      setDataToDelete(id);
+      setOpenModal(true);
+    }
+  }
+
+  const closeModal =(id)=>{
+    setDataToDelete(null);
+    setOpenForm(false);
+  }
+
+  const confirmDelete = async()=>{
+    setLoading(true);
+    const response = await axios.delete('/api/education', { data:{id: dataToDelete}});
+    if(response && response?.data){
+      setUserData(response?.data?.success);
+      setDataToDelete(null);
+      setOpenModal(false);
+      setLoading(false);
+      toast.success('Deleted Successfully');
+    }else if(response?.data?.error){
+      setDataToDelete(null);
+      setOpenModal(false);
+      setLoading(false);
+      toast.success(response?.data?.error);
+    }
   };
 
-  // Function to handle removing an education entry
-  const handleRemoveEducation = (index) => {
-    const newEducation = formik.values.education.filter((_, i) => i !== index);
-    formik.setFieldValue("education", newEducation);
+  const openUpdateForm = (data)=>{
+    if(data){
+      setDataToUpdate(data);
+      setOpenForm(true);
+    }
   };
+
+  const closeUpdateForm =()=>{
+    setDataToUpdate(null);
+    setOpenForm(false);
+  }
+
+
+
+  if(loading) return <Loader/>
 
   return (
-    <>
-      <div className="text-center mb-5">
-        <h5
-          className={`text-4xl font-semibold ${
-            theme === "dark" ? "text-teal-400" : "text-indigo-600"
-          } `}
-        >
-          Educational Information
-        </h5>
-      </div>
-
-      {/* Add another education entry button */}
-      <div className="mb-4">
+    <div className="w-full min-h-screen">
+      <div className="w-full flex justify-end mb-5">
         <button
           type="button"
-          onClick={handleAddEducation}
-          className={`flex items-center justify-center ${
-            theme === "dark"
-              ? "bg-teal-500 text-white hover:bg-teal-600 focus:ring-teal-500"
-              : "bg-indigo-600 hover:bg-indigo-700 text-white"
-          } font-semibold py-2 px-4 rounded-lg  focus:outline-none focus:ring-2  focus:ring-opacity-50 transition-all`}
+          className="flex items-center text-white bg-indigo-600 px-3 py-2 rounded hover:bg-indigo-700"
+          onClick={() => setOpenForm(true)}
         >
-          <FiPlus className="mr-2" /> Add Another
+          <FaPlusCircle className="mr-2" />
+          Add Education
         </button>
       </div>
 
-      {/* Render dynamic list of education entries */}
-      {formik.values.education.map((_, index) => (
-        <div
-          key={index}
-          className={`mb-6 ${
-            formik.values.education.length > 1
-              ? "border-b border-gray-300 pb-6"
-              : ""
-          }`}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="mb-3">
-              <label
-                htmlFor={`education[${index}].school`}
-                className={`block text-xl font-semibold ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-700"
-                } `}
-              >
-                School
-              </label>
-              <input
-                type="text"
-                placeholder="Enter School Name"
-                name={`education[${index}].school`}
-                value={formik.values.education[index].school}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`w-full p-4 rounded-lg
-                  ${
-                    theme === "dark"
-                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                      : "bg-gray-300 text-black"
-                  }`}
-              />
-            </div>
+      <form className="rounded bg-white p-5 w-full h-full sm:p-10">
+        {userData?.education?.length > 0 ? (
+          userData?.education?.map((edu, index) => (
+            <div key={index} className="border p-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2 gap-5 mb-3">
+                <div className="flex mb-3 flex-col">
+                  <label htmlFor="School">
+                    School<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter School Name"
+                    className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
+                    readOnly
+                    value={edu.school}
+                  />
+                </div>
+                <div className="flex mb-3 flex-col">
+                  <label htmlFor="Degree">
+                    Degree<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter Degree Name"
+                    className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
+                    readOnly
+                    value={edu.degree}
+                  />
+                </div>
+                <div className="flex mb-3 flex-col">
+                  <label htmlFor="Field of Study">
+                    Field of Study<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter Field of Study"
+                    className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
+                    readOnly
+                    value={edu.field}
+                  />
+                </div>
+                <div className="flex mb-3 flex-col">
+                  <label htmlFor="Grade">
+                    Grade<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter Grade"
+                    className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
+                    readOnly
+                    value={edu.grade}
+                  />
+                </div>
+                <div className="flex mb-3 flex-col">
+                  <label htmlFor="startdate">
+                    Start Date<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    placeholder="Enter Start Date"
+                    className="px-3 py-2 rounded border border-gray-200 bg-gray-50"
+                    readOnly
+                    value={
+                      edu.start
+                        ? new Date(edu.start).toISOString().split("T")[0]
+                        : ""
+                    }
+                  />
+                </div>
+                <div className="flex mb-3 flex-col">
+                  <label htmlFor="endate">
+                    End Date<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    placeholder="Enter End Date"
+                    className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
+                    readOnly
+                    value={
+                      edu.end
+                        ? new Date(edu.end).toISOString().split("T")[0]
+                        : ""
+                    }
+                  />
+                </div>
+              </div>
 
-            <div className="mb-3">
-              <label
-                htmlFor={`education[${index}].degree`}
-                className={`block text-xl font-semibold ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-700"
-                } `}
-              >
-                Degree
-              </label>
-              <input
-                type="text"
-                placeholder="Enter Degree Name"
-                name={`education[${index}].degree`}
-                value={formik.values.education[index].degree}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`w-full p-4 rounded-lg
-                  ${
-                    theme === "dark"
-                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                      : "bg-gray-300 text-black"
-                  }`}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label
-                htmlFor={`education[${index}].field`}
-                className={`block text-xl font-semibold ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-700"
-                } `}
-              >
-                Field of Study
-              </label>
-              <input
-                type="text"
-                placeholder="Enter Field of Study"
-                name={`education[${index}].field`}
-                value={formik.values.education[index].field}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`w-full p-4 rounded-lg
-                  ${
-                    theme === "dark"
-                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                      : "bg-gray-300 text-black"
-                  }`}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label
-                htmlFor={`education[${index}].grade`}
-                className={`block text-xl font-semibold ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-700"
-                } `}
-              >
-                Grade
-              </label>
-              <input
-                type="text"
-                placeholder="Enter Grade"
-                name={`education[${index}].grade`}
-                value={formik.values.education[index].grade}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`w-full p-4 rounded-lg
-                  ${
-                    theme === "dark"
-                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                      : "bg-gray-300 text-black"
-                  }`}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label
-                htmlFor={`education[${index}].start`}
-                className={`block text-xl font-semibold ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-700"
-                } `}
-              >
-                Start Date
-              </label>
-              <input
-                type="date"
-                name={`education[${index}].start`}
-                value={formik.values.education[index].start}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`w-full p-4 rounded-lg
-                  ${
-                    theme === "dark"
-                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                      : "bg-gray-300 text-black"
-                  }`}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label
-                htmlFor={`education[${index}].end`}
-                className={`block text-xl font-semibold ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-700"
-                } `}
-              >
-                End Date
-              </label>
-              <input
-                type="date"
-                name={`education[${index}].end`}
-                value={formik.values.education[index].end}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`w-full p-4 rounded-lg
-                  ${
-                    theme === "dark"
-                      ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                      : "bg-gray-300 text-black"
-                  }`}
-              />
-            </div>
-          </div>
-
-          {/* File input */}
-          <div className="mb-6">
-            <label
-              htmlFor={`education[${index}].image`}
-              className={`block text-xl font-semibold ${
-                theme === "dark" ? "text-gray-300" : "text-gray-700"
-              } `}
-            >
-              Image
-            </label>
-            <input
-              type="file"
-              accept="image/jpeg, image/png, image/webp"
-              name={`education[${index}].image`}
-              onChange={(e) =>
-                formik.setFieldValue(
-                  `education[${index}].image`,
-                  e.currentTarget.files[0]
-                )
-              }
-              className={`w-full p-4 rounded-lg
-                ${
-                  theme === "dark"
-                    ? "bg-gray-700 text-white focus:ring-teal-500 focus:border-teal-500"
-                    : "bg-gray-300 text-black"
-                }`}
-            />
-          </div>
-          {formik?.values?.education[index]?.image ? (
-            <div className="mt-4">
-              <Image
-                src={URL.createObjectURL(
-                  formik?.values?.education[index]?.image
+              <div className="flex items-center justify-between flex-wrap gap-5">
+                {edu?.imageURL && (
+                  <div>
+                    <Image
+                      alt="education"
+                      src={edu.imageURL}
+                      width={100}
+                      height={100}
+                      className="w-28 h-auto object-fill"
+                    />
+                  </div>
                 )}
-                alt="Education image preview"
-                width={200}
-                height={150}
-                className="w-60 h-50"
-              />
+                <div className="flex justify-end space-x-3 flex-wrap gap-5">
+                  <button
+                    type="button"
+                    onClick={()=>openUpdateForm(edu)}
+                    className="text-white bg-blue-600 py-2 px-3 rounded hover:bg-blue-700 flex items-center h-fit"
+                  >
+                    {" "}
+                    <FaPencilAlt className="mr-2" /> Update
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openDeletePopup(edu._id)}
+                    className="text-white bg-red-600 py-2 px-3 rounded hover:bg-red-700 flex items-center h-fit"
+                  >
+                    {" "}
+                    <MdDelete className="mr-2" /> Delete
+                  </button>
+                </div>
+              </div>
             </div>
-          ) : data?.education?.[index]?.imageURL ? (
-            <div className="mt-4">
-              <Image
-                src={data?.education[index]?.imageURL}
-                alt="Saved education image"
-                width={200}
-                height={150}
-                className="w-60 h-50"
-              />
-            </div>
-          ) : null}
-
-          {/* Remove button */}
-          {formik?.values?.education?.length > 1 && (
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={() => handleRemoveEducation(index)}
-                className="flex items-center text-red-500 font-semibold hover:text-red-600 focus:outline-none transition-all"
-              >
-                <FiTrash className="mr-2" /> Remove
-              </button>
-            </div>
-          )}
-        </div>
-      ))}
-    </>
+          ))
+        ) : (
+          <p className="text-center text-red-500">No Data Found</p>
+        )}
+      </form>
+      {openForm && (
+        <AddEducation setOpenForm={setOpenForm} setUserData={setUserData} closeUpdateForm={closeUpdateForm} dataToUpdate={dataToUpdate} setDataToUpdate={setDataToUpdate} />
+      )}
+      <DeleteModal openModal={openModal}
+        setOpenModal={setOpenModal}
+        onConfirm={confirmDelete}
+        closeModal={closeModal} />
+    </div>
   );
 };
 

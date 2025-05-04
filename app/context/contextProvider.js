@@ -7,8 +7,7 @@ const dataContext = createContext();
 
 export const DataProvider = ({ children }) =>{
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [isLogin, setIsLogin] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [theme, setTheme] = useState(null);
 
     useEffect(()=>{
@@ -38,7 +37,7 @@ export const DataProvider = ({ children }) =>{
 
 
     return (
-        <dataContext.Provider value={{ data, loading, isLogin, setIsLogin, setData, theme, setTheme }}>
+        <dataContext.Provider value={{ data, loading, setData, theme, setTheme }}>
             {children}
         </dataContext.Provider>
     )

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import LoadingSpinner from "../effects/LoadingSpinner";
 
 const ToggleButton = () => {
-  const { theme, setTheme } = useData();
+  const { theme, setTheme } = useData(null);
   const [loading, setLoading] = useState(false);
 
   const changeTheme = async (mode) => {

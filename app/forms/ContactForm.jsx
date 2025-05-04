@@ -247,7 +247,7 @@ const ContactPage = () => {
               Email
             </h4>
             <p
-              className={`text-lg ${
+              className={`text-lg normal-case ${
                 theme === "dark" ? "text-white" : "text-gray-800"
               } `}
             >

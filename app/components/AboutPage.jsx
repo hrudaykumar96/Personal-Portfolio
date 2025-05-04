@@ -76,7 +76,7 @@ const AboutPage = () => {
                 {data?.designation}
               </motion.p>
               <motion.p
-                className={`text-sm ${
+                className={`text-sm normal-case ${
                   theme === "dark" ? "text-gray-300" : "text-gray-700"
                 }  leading-relaxed text-justify`}
                 initial={{ opacity: 0, x: -100 }}
@@ -208,7 +208,7 @@ const AboutPage = () => {
               Email
             </h4>
             <p
-              className={`text-lg ${
+              className={`text-lg normal-case ${
                 theme === "dark" ? "text-white" : "text-gray-800"
               } `}
             >

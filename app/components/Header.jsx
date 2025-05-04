@@ -5,10 +5,6 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import axios from "axios";
-import { FiLogOut } from "react-icons/fi";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import { useData } from "../context/contextProvider";
 import LoadingSpinner from "../effects/LoadingSpinner";
 
@@ -23,8 +19,7 @@ const navigation = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname(); // Use usePathname to get the current pathname
-  const router = useRouter();
-  const { isLogin, setIsLogin, theme } = useData();
+  const { theme } = useData();
   const [loading, setLoading] = useState(false);
 
   // Close the mobile menu when a menu item is clicked
@@ -32,25 +27,6 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
 
-  /* logout user */
-  const logoutUser = async () => {
-    setLoading(true);
-    const response = await axios.post("/api/logout");
-    setMobileMenuOpen(false);
-    if (response?.data) {
-      if (response.data.error) {
-        setIsLogin(true);
-        toast.error(response.data.error);
-        setLoading(false);
-      } else if (response.data.success) {
-        setIsLogin(false);
-        toast.success(response.data.success);
-        setLoading(false);
-        router.replace("/login");
-        window.location.reload();
-      }
-    }
-  };
 
   if (loading) return <LoadingSpinner />;
 
@@ -106,23 +82,12 @@ export default function Header() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {isLogin ? (
-            <button
-              type="button"
-              onClick={logoutUser}
-              className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 inline-flex items-center"
-            >
-              Log out
-              <FiLogOut className="ml-2 text-lg" />
-            </button>
-          ) : (
-            <Link
-              href="/login"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Log in <span aria-hidden="true">&rarr;</span>
-            </Link>
-          )}
+          <Link
+            href="/login"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Log in <span aria-hidden="true">&rarr;</span>
+          </Link>
         </div>
       </nav>
       <Dialog
@@ -184,25 +149,15 @@ export default function Header() {
                 ))}
               </div>
               <div className="py-6">
-                {isLogin ? (
-                  <button
-                    type="button"
-                    onClick={logoutUser}
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800 bg-red-500"
-                  >
-                    Log out
-                  </button>
-                ) : (
-                  <Link
-                    href="/login"
-                    className={`-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold ${
-                      theme === "dark" ? "text-white" : "text-black"
-                    }  hover:bg-gray-800`}
-                    onClick={handleMenuItemClick}
-                  >
-                    Log in
-                  </Link>
-                )}
+                <Link
+                  href="/login"
+                  className={`-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold ${
+                    theme === "dark" ? "text-white" : "text-black"
+                  }  hover:bg-gray-800`}
+                  onClick={handleMenuItemClick}
+                >
+                  Log in
+                </Link>
               </div>
             </div>
           </div>

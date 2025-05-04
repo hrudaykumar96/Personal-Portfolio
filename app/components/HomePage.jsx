@@ -3,18 +3,23 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ReactTyped } from "react-typed";
-import { FaFacebook, FaLinkedin, FaInstagram, FaGithub, FaTelegram } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaInstagram,
+  FaGithub,
+  FaTelegram,
+} from "react-icons/fa";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useData } from "../context/contextProvider";
 import LoadingSpinner from "../effects/LoadingSpinner";
+import { IoLogoWhatsapp } from "react-icons/io";
 
 const HomePage = () => {
   const [typedReady, setTypedReady] = useState(false);
   const [nameColor, setNameColor] = useState("text-white");
   const { loading, data, theme } = useData();
-
-  
 
   useEffect(() => {
     setTypedReady(true);
@@ -26,7 +31,7 @@ const HomePage = () => {
       "text-green-500",
       "text-blue-500",
       "text-indigo-500",
-      "text-violet-500"
+      "text-violet-500",
     ];
 
     let colorIndex = 0;
@@ -39,50 +44,94 @@ const HomePage = () => {
   }, []);
 
   const socialLinks = [
-    
     {
-      name: 'Facebook',
+      name: "Facebook",
       href: `${data?.facebook}`,
-      icon: <FaFacebook className={`h-8 w-8 ${
-        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
-      } transition-all duration-300`} />,
+      icon: (
+        <FaFacebook
+          className={`h-8 w-8 ${
+            theme === "dark"
+              ? "text-gray-400 hover:text-gray-300"
+              : "text-gray-900 hover:text-indigo-500"
+          } transition-all duration-300`}
+        />
+      ),
     },
     {
-      name: 'LinkedIn',
+      name: "LinkedIn",
       href: `${data?.linkedin}`,
-      icon: <FaLinkedin className={`h-8 w-8 ${
-        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
-      } transition-all duration-300`} />,
+      icon: (
+        <FaLinkedin
+          className={`h-8 w-8 ${
+            theme === "dark"
+              ? "text-gray-400 hover:text-gray-300"
+              : "text-gray-900 hover:text-indigo-500"
+          } transition-all duration-300`}
+        />
+      ),
     },
     {
-      name: 'Instagram',
+      name: "Instagram",
       href: `${data?.instagram}`,
-      icon: <FaInstagram className={`h-8 w-8 ${
-        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
-      } transition-all duration-300`} />,
+      icon: (
+        <FaInstagram
+          className={`h-8 w-8 ${
+            theme === "dark"
+              ? "text-gray-400 hover:text-gray-300"
+              : "text-gray-900 hover:text-indigo-500"
+          } transition-all duration-300`}
+        />
+      ),
     },
     {
-      name: 'GitHub',
+      name: "GitHub",
       href: `${data?.github}`,
-      icon: <FaGithub className={`h-8 w-8 ${
-        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
-      } transition-all duration-300`} />,
+      icon: (
+        <FaGithub
+          className={`h-8 w-8 ${
+            theme === "dark"
+              ? "text-gray-400 hover:text-gray-300"
+              : "text-gray-900 hover:text-indigo-500"
+          } transition-all duration-300`}
+        />
+      ),
     },
     {
-      name: 'Telegram',
+      name: "Telegram",
       href: `${data?.telegram}`,
-      icon: <FaTelegram className={`h-8 w-8 ${
-        theme === 'dark' ? 'text-gray-400 hover:text-gray-300' : 'text-gray-900 hover:text-indigo-500'
-      } transition-all duration-300`} />,
+      icon: (
+        <FaTelegram
+          className={`h-8 w-8 ${
+            theme === "dark"
+              ? "text-gray-400 hover:text-gray-300"
+              : "text-gray-900 hover:text-indigo-500"
+          } transition-all duration-300`}
+        />
+      ),
+    },
+    {
+      name: "Whatsapp",
+      href: `${data?.whatsapp}`,
+      icon: (
+        <IoLogoWhatsapp
+          className={`h-8 w-8 ${
+            theme === "dark"
+              ? "text-gray-400 hover:text-gray-300"
+              : "text-gray-900 hover:text-indigo-500"
+          } transition-all duration-300`}
+        />
+      ),
     },
   ];
 
-
-  if(loading) return <LoadingSpinner/>
+  if (loading) return <LoadingSpinner />;
 
   return (
-    <div className={`${theme === "dark" ? 'bg-gray-900' : 'bg-gray-100'}  min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 md:px-8`}>
-
+    <div
+      className={`${
+        theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+      }  min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 md:px-8`}
+    >
       <motion.div
         className="flex flex-col-reverse md:flex-row items-center justify-between w-full max-w-7xl space-y-8 md:space-y-0 md:space-x-12 gap-5"
         initial={{ opacity: 0, x: -100 }}
@@ -91,8 +140,14 @@ const HomePage = () => {
         viewport={{ once: true }}
       >
         <div className="text-center md:text-left text-white space-y-6 md:space-y-8">
-          <h4 className={`text-lg sm:text-xl font-semibold ${theme === "dark" ? "text-gray-400" : 'text-gray-800'}  uppercase tracking-wider`}>Hello, I'm</h4>
-          
+          <h4
+            className={`text-lg sm:text-xl font-semibold ${
+              theme === "dark" ? "text-gray-400" : "text-gray-800"
+            }  uppercase tracking-wider`}
+          >
+            Hello, I'm
+          </h4>
+
           {/* Name Text with Animated Color Change */}
           <motion.p
             className={`text-4xl sm:text-5xl md:text-6xl font-bold mb-4 ${nameColor}`}
@@ -101,31 +156,33 @@ const HomePage = () => {
             transition={{ delay: 0.5, duration: 1 }}
             viewport={{ once: true }}
           >
-            { data?.name}
+            {data?.name}
           </motion.p>
 
           {/* Typewriter Text Animation */}
           {typedReady && (
             <motion.div
-              className={`relative overflow-hidden ${theme === 'dark' ? 'text-gray-400' : 'text-gray-800'}  text-xl sm:text-2xl md:text-3xl font-medium`}
+              className={`relative overflow-hidden ${
+                theme === "dark" ? "text-gray-400" : "text-gray-800"
+              }  text-xl sm:text-2xl md:text-3xl font-medium`}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 1, duration: 1 }}
               viewport={{ once: true }}
             >
               I'm a <span></span>
-              { data?.technologies?.length > 0 && 
-              <ReactTyped
-                strings={data?.technologies?.length > 0
-                  ? data?.technologies
-                  : []}
-                typeSpeed={100}
-                backSpeed={50}
-                backDelay={1000}
-                loop={true}
-                showCursor={true}
-              />
-            }
+              {data?.technologies?.length > 0 && (
+                <ReactTyped
+                  strings={
+                    data?.technologies?.length > 0 ? data?.technologies?.map((tech) => tech.name) : []
+                  }
+                  typeSpeed={100}
+                  backSpeed={50}
+                  backDelay={1000}
+                  loop={true}
+                  showCursor={true}
+                />
+              )}
             </motion.div>
           )}
 
@@ -159,17 +216,21 @@ const HomePage = () => {
           transition={{ delay: 2, duration: 1 }}
           viewport={{ once: true }}
         >
-          <div className={`rounded-full overflow-hidden w-full h-full border-4 ${theme === "dark" ? 'border-teal-500 bg-teal-500' : 'shadow-lg' } `}>
-            { data?.profileURL && 
-             <Image
-              src={data.profileURL}
-              alt="profile"
-              width={500}
-              height={500}
-              className="object-fill w-full h-full transform transition duration-300 ease-in-out hover:scale-110 hover:grayscale hover:shadow-2xl"
-              priority
-            /> 
-}
+          <div
+            className={`rounded-full overflow-hidden w-full h-full border-4 ${
+              theme === "dark" ? "border-teal-500 bg-teal-500" : "shadow-lg"
+            } `}
+          >
+            {data?.profileURL && (
+              <Image
+                src={data.profileURL}
+                alt="profile"
+                width={500}
+                height={500}
+                className="object-fill w-full h-full transform transition duration-300 ease-in-out hover:scale-110 hover:grayscale hover:shadow-2xl"
+                priority
+              />
+            )}
           </div>
         </motion.div>
       </motion.div>

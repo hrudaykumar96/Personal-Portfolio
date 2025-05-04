@@ -12,6 +12,7 @@
   body {
     font-family: var(--font-poppins), sans-serif;
     user-select: none;
+    text-transform: capitalize;
   }
   
 
@@ -25,4 +26,10 @@
     left: 0;
     height: 100%;
     width: 100%;
+}
+input[type= text], input[type=number], textarea, ::placeholder{
+  text-transform: capitalize;
+}
+input[type=email], input[type=password]{
+  text-transform: none;
 }
