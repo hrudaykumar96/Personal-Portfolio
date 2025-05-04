@@ -28,7 +28,7 @@ const ToggleButton = () => {
 
   return (
     <>
-      {theme && (
+
         <div
           className={`z-50 fixed top-20 right-0 p-2 flex justify-center items-center transition-all duration-300 ${
             theme === "light" ? "text-black" : "text-white"
@@ -48,7 +48,7 @@ const ToggleButton = () => {
             )}
           </button>
         </div>
-      )}
+
     </>
   );
 };
