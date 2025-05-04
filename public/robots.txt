@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /administration/
+Disallow: /login/
+Disallow: /resetpassword/
