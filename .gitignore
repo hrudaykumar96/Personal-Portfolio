@@ -1,0 +1,39 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Next.js build output
+.next/
+out/
+
+# Build directory
+dist/
+
+# Optional npm cache directory
+.npm/
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Vercel/Netlify deployment folders (if used)
+.vercel/
+.netlify/
+
+# Yarn or pnpm lock files (if not using them)
+yarn.lock
+pnpm-lock.yaml
+
+# IDEs
+.vscode/
+.idea/
