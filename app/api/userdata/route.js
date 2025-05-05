@@ -28,6 +28,7 @@ export const GET = async (req) => {
     user.skills = sortArrayByIdDesc(user.skills);
     user.technologies = sortArrayByIdDesc(user.technologies);
     user.education = sortArrayByIdDesc(user.education);
+    user.certifications = sortArrayByIdDesc(user.certifications);
     user.experience = sortArrayByIdDesc(user.experience);
 
     return NextResponse.json({ success: user });

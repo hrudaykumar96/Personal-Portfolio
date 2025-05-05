@@ -40,7 +40,7 @@ const AddTechnologies = ({
             setOpenForm(false);
             setDataToUpdate(null);
             setLoading(false);
-            toast.success("Updated Successfully");
+            toast.success("Technology Updated Successfully");
           } else if (response?.data?.error) {
             setOpenForm(false);
             setLoading(false);
@@ -61,7 +61,7 @@ const AddTechnologies = ({
           if (response?.data?.success) {
             setOpenForm(false);
             setUserData(response?.data?.success);
-            toast.success("Added Successfully");
+            toast.success("Technology Added Successfully");
             setLoading(false);
           } else if (response?.data?.error) {
             setLoading(false);

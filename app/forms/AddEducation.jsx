@@ -86,7 +86,7 @@ const AddEducation = ({
             setOpenForm(false);
             setDataToUpdate(null);
             setLoading(false);
-            toast.success("Updated Successfully");
+            toast.success("Education Updated Successfully");
           } else if (response?.data?.error) {
             setOpenForm(false);
             setDataToUpdate(null);
@@ -113,7 +113,7 @@ const AddEducation = ({
             setUserData(response?.data?.success);
             setOpenForm(false);
             setLoading(false);
-            toast.success("Added Successfully");
+            toast.success("Education Added Successfully");
           } else if (response?.data?.error) {
             setOpenForm(false);
             setLoading(false);

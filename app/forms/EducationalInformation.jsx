@@ -37,7 +37,7 @@ const EducationalInformation = ({ userData, setUserData }) => {
       setDataToDelete(null);
       setOpenModal(false);
       setLoading(false);
-      toast.success('Deleted Successfully');
+      toast.success('Education Deleted Successfully');
     }else if(response?.data?.error){
       setDataToDelete(null);
       setOpenModal(false);
@@ -89,7 +89,7 @@ const EducationalInformation = ({ userData, setUserData }) => {
                     placeholder="Enter School Name"
                     className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
                     readOnly
-                    value={edu.school}
+                    value={edu.school || ""}
                   />
                 </div>
                 <div className="flex mb-3 flex-col">
@@ -101,7 +101,7 @@ const EducationalInformation = ({ userData, setUserData }) => {
                     placeholder="Enter Degree Name"
                     className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
                     readOnly
-                    value={edu.degree}
+                    value={edu.degree || ""}
                   />
                 </div>
                 <div className="flex mb-3 flex-col">
@@ -113,7 +113,7 @@ const EducationalInformation = ({ userData, setUserData }) => {
                     placeholder="Enter Field of Study"
                     className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
                     readOnly
-                    value={edu.field}
+                    value={edu.field || ""}
                   />
                 </div>
                 <div className="flex mb-3 flex-col">
@@ -125,7 +125,7 @@ const EducationalInformation = ({ userData, setUserData }) => {
                     placeholder="Enter Grade"
                     className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
                     readOnly
-                    value={edu.grade}
+                    value={edu.grade || ""}
                   />
                 </div>
                 <div className="flex mb-3 flex-col">

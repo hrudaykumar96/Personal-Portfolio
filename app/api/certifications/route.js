@@ -21,34 +21,28 @@ export async function POST(req) {
 
     const formData = await req.formData();
 
-    const school = formData.get("school");
-    const degree = formData.get("degree");
-    const field = formData.get("field");
-    const grade = formData.get("grade");
-    const start = formData.get("start");
-    const end = formData.get("end");
+    const name = formData.get("name");
+    const organization = formData.get("organization");
+    const issued = formData.get("issued");
     const image = formData.get("image");
 
-    const techLower = degree.toLowerCase();
+    const techLower = name.toLowerCase();
 
     let imageResult;
 
-    const educationExists = user.education.some(
-      (s) => s.degree.toLowerCase() === techLower
+    const certificationExists = user.certifications.some(
+      (s) => s.name.toLowerCase() === techLower
     );
 
-    if (!educationExists) {
+    if (!certificationExists) {
       if (image) {
         imageResult = await uploadToCloudinary(image);
       }
 
-      user.education.push({
-        school,
-        degree,
-        field,
-        grade,
-        start,
-        end,
+      user.certifications.push({
+        name,
+        organization,
+        issued,
         imageURL: imageResult?.secure_url || null,
         imagePublic_id: imageResult?.public_id || null,
       });
@@ -89,7 +83,7 @@ export async function DELETE(req) {
     const { id } = await req.json();
     if (!id) return NextResponse.json({ error: "Id not found" });
 
-    const educationToDelete = user.education.find(
+    const educationToDelete = user.certifications.find(
       (edu) => edu._id.toString() === id
     );
 
@@ -97,7 +91,9 @@ export async function DELETE(req) {
       await deleteUploadFile(educationToDelete.imagePublic_id);
     }
 
-    user.education = user.education.filter((edu) => edu._id.toString() !== id);
+    user.certifications = user.certifications.filter(
+      (edu) => edu._id.toString() !== id
+    );
     await user.save();
 
     const sortArrayByIdDesc = (arr) =>
@@ -129,50 +125,47 @@ export async function PUT(req) {
 
     const formData = await req.formData();
 
-    const school = formData.get("school");
-    const degree = formData.get("degree");
-    const field = formData.get("field");
-    const grade = formData.get("grade");
-    const start = formData.get("start");
-    const end = formData.get("end");
+    const name = formData.get("name");
+    const organization = formData.get("organization");
+    const issued = formData.get("issued");
     const image = formData.get("image");
     const id = formData.get("id");
 
-    if (!id || typeof degree !== "string") {
+    if (!id || typeof name !== "string") {
       return NextResponse.json({ error: "Missing or invalid data" });
     }
 
-    const techLower = degree.toLowerCase();
+    const techLower = name.toLowerCase();
 
-    const isDuplicate = user.education.some(
-      (t) => t.degree.toLowerCase() === techLower && t._id.toString() !== id
+    const isDuplicate = user.certifications.some(
+      (t) => t.name.toLowerCase() === techLower && t._id.toString() !== id
     );
     if (isDuplicate) {
-      return NextResponse.json({ nameError: "Qualification already exists" });
+      return NextResponse.json({ nameError: "Certification already exists" });
     }
 
-    const techIndex = user.education.findIndex((t) => t._id.toString() === id);
+    const techIndex = user.certifications.findIndex(
+      (t) => t._id.toString() === id
+    );
     if (techIndex === -1) {
-      return NextResponse.json({ error: "Qualification not found" });
+      return NextResponse.json({ error: "Certification not found" });
     }
 
     if (image && image !== "null") {
-      if (user.education[techIndex].imagePublic_id) {
-        await deleteUploadFile(user.education[techIndex].imagePublic_id);
+      if (user.certifications[techIndex].imagePublic_id) {
+        await deleteUploadFile(user.certifications[techIndex].imagePublic_id);
       }
       const imageResult = await uploadToCloudinary(image);
-      user.education[techIndex].imageURL = imageResult?.secure_url;
-      user.education[techIndex].imagePublic_id = imageResult?.public_id;
+      user.certifications[techIndex].imageURL = imageResult?.secure_url;
+      user.certifications[techIndex].imagePublic_id = imageResult?.public_id;
     }
 
-    user.education[techIndex].school =
-      school || user.education[techIndex].school;
-    user.education[techIndex].degree =
-      degree || user.education[techIndex].degree;
-    user.education[techIndex].field = field || user.education[techIndex].field;
-    user.education[techIndex].grade = grade || user.education[techIndex].grade;
-    user.education[techIndex].start = start || user.education[techIndex].start;
-    user.education[techIndex].end = end || user.education[techIndex].end;
+    user.certifications[techIndex].name =
+      name || user.certifications[techIndex].name;
+    user.certifications[techIndex].organization =
+      organization || user.certifications[techIndex].organization;
+    user.certifications[techIndex].issued =
+      issued || user.certifications[techIndex].issued;
 
     await user.save();
 

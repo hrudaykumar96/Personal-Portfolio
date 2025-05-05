@@ -33,6 +33,7 @@ export async function POST(req) {
         user.skills = sortArrayByIdDesc(user.skills);
         user.technologies = sortArrayByIdDesc(user.technologies);
         user.education = sortArrayByIdDesc(user.education);
+        user.certifications = sortArrayByIdDesc(user.certifications);
         user.experience = sortArrayByIdDesc(user.experience);
         return NextResponse.json({ success: user });
       } else {
@@ -74,6 +75,7 @@ export async function DELETE(req) {
     user.skills = sortArrayByIdDesc(user.skills);
     user.technologies = sortArrayByIdDesc(user.technologies);
     user.education = sortArrayByIdDesc(user.education);
+    user.certifications = sortArrayByIdDesc(user.certifications);
     user.experience = sortArrayByIdDesc(user.experience);
     return NextResponse.json({ success: user });
   } catch (error) {
@@ -124,6 +126,7 @@ export async function PUT(req) {
       user.skills = sortArrayByIdDesc(user.skills);
       user.technologies = sortArrayByIdDesc(user.technologies);
       user.education = sortArrayByIdDesc(user.education);
+      user.certifications = sortArrayByIdDesc(user.certifications);
       user.experience = sortArrayByIdDesc(user.experience);
       return NextResponse.json({ success: user });
     } else {

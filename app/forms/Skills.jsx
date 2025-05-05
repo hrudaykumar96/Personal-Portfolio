@@ -43,7 +43,7 @@ const Skills = ({ userData, setUserData }) => {
         setOpenModal(false);
         setDataTodelete(null);
         setLoading(false);
-        toast.success("Deleted Successfully");
+        toast.success("Skill Deleted Successfully");
       } else if (response?.data?.error) {
         setOpenModal(false);
         setDataTodelete(null);
@@ -95,7 +95,7 @@ const Skills = ({ userData, setUserData }) => {
                     type="text"
                     placeholder="Enter Skill Name"
                     className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
-                    value={skill?.name}
+                    value={skill?.name || ""}
                     readOnly
                   />
                 </div>

@@ -59,7 +59,7 @@ const AddSkill = ({
             setDataToUpdate(null);
             setOpenForm(false);
             setLoading(false);
-            toast.success("Updated Successfully");
+            toast.success("Skills Updated Successfully");
           } else if (response?.data?.error) {
             setDataToUpdate(null);
             setOpenForm(false);
@@ -83,7 +83,7 @@ const AddSkill = ({
             setUserData(response?.data?.success);
             setOpenForm(false);
             setLoading(false);
-            toast.success("Added Successfully");
+            toast.success("Skill Added Successfully");
           } else if (response?.data?.error) {
             setOpenForm(false);
             setLoading(false);

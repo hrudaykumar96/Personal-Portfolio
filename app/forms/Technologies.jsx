@@ -42,7 +42,7 @@ const Technologies = ({ userData, setUserData }) => {
         setOpenModal(false);
         setDataTODelete(null);
         setLoading(false);
-        toast.success("Deleted Successfully");
+        toast.success("Technology Deleted Successfully");
       } else if (response?.data?.error) {
         setOpenModal(false);
         setLoading(false);
@@ -107,7 +107,7 @@ const Technologies = ({ userData, setUserData }) => {
                   type="text"
                   placeholder="Enter Technology"
                   className="pl-3 py-2 rounded border border-gray-200 bg-gray-50"
-                  value={tech.name}
+                  value={tech.name || ""}
                   readOnly
                 />
               </div>
