@@ -37,7 +37,7 @@ export async function POST(req) {
                  <div style="text-align: center;">
                    <img src="${process.env.NEXT_PUBLIC_FRONTEND_URL}/logo.webp" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
                  </div>
-                 <h2 style="color: #4CAF50;">Hello ${user.name},</h2>
+                 <h2 style="color: #4CAF50; text-transform: capitalize;">Hello ${user.name},</h2>
                  <p>Your OTP code to reset your password is: <strong style="font-size: 18px; color: #4CAF50;">${otp}</strong></p>
                  <p style="font-size: 14px; color: #888;">Note: OTP expires in 5 minutes.</p>
                </body>
