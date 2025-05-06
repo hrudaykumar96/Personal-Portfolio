@@ -159,10 +159,10 @@ const AboutPage = () => {
                         {skill?.imageURL && (
                           <Image
                             src={skill?.imageURL || null}
-                            height={80}
-                            width={80}
                             alt={skill?.name || null}
-                            className="rounded"
+                            width={256}
+                            height={256}
+                            className="object-fill w-full h-full"
                           />
                         )}
                       </div>

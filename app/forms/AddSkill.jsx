@@ -32,16 +32,17 @@ const AddSkill = ({
     validationSchema: yup.object({
       name: yup.string().required("Enter Skill Name"),
       skillImage: yup.string(),
-      image: yup
-        .mixed()
-        .when("skillImage", {
-          is: (skillImage) => !!skillImage,
-          then: () => yup.mixed().notRequired(),
-          otherwise: () => yup.mixed().required("Upload Image"),
-        })
-        .test("fileType", "Only JPG, JPEG, PNG, WEBP", (value) => {
-          return value && SUPPORTED_FORMATS.includes(value.type);
-        }),
+      image: yup.mixed().when("skillImage", {
+        is: (skillImage) => !!skillImage,
+        then: () => yup.mixed().notRequired(),
+        otherwise: () =>
+          yup
+            .mixed()
+            .required("Upload Image")
+            .test("fileType", "Only JPG, JPEG, PNG, WEBP", (value) => {
+              return value && SUPPORTED_FORMATS.includes(value.type);
+            }),
+      }),
     }),
     onSubmit: async (values) => {
       if (dataToUpdate) {
@@ -167,7 +168,9 @@ const AddSkill = ({
                   className="w-20 h-auto object-fill"
                 />
               </div>
-            ) : <div></div>}
+            ) : (
+              <div></div>
+            )}
             <div className="flex justify-end space-x-3">
               <button
                 type="submit"

@@ -39,16 +39,17 @@ const AddCertification = ({
       organization: yup.string().required("Enter Issuing Organization"),
       issued: yup.string().required("Enter Issued Date"),
       certificationImage: yup.string(),
-      image: yup
-        .mixed()
-        .when("certificationImage", {
-          is: (certificationImage) => !!certificationImage,
-          then: () => yup.mixed().notRequired(),
-          otherwise: () => yup.mixed().required("Upload Image"),
-        })
-        .test("fileType", "Only JPG, JPEG, PNG, WEBP", (value) => {
-          return value && SUPPORTED_FORMATS.includes(value.type);
-        }),
+      image: yup.mixed().when("certificationImage", {
+        is: (certificationImage) => !!certificationImage,
+        then: () => yup.mixed().notRequired(),
+        otherwise: () =>
+          yup
+            .mixed()
+            .required("Upload Image")
+            .test("fileType", "Only JPG, JPEG, PNG, WEBP", (value) => {
+              return value && SUPPORTED_FORMATS.includes(value.type);
+            }),
+      }),
     }),
     onSubmit: async (values) => {
       if (dataToUpdate) {

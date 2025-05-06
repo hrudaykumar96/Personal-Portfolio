@@ -1,11 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import Loader from "../effects/Loader";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const AddExperience = ({ setOpenForm }) => {
+const AddExperience = ({
+  setOpenForm,
+  setUserData,
+  closeUpdateForm,
+  dataToUpdate,
+  setDataToUpdate,
+}) => {
+  const [loading, setLoading] = useState(false);
   const SUPPORTED_FORMATS = [
     "image/jpg",
     "image/jpeg",
@@ -15,32 +25,112 @@ const AddExperience = ({ setOpenForm }) => {
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      name: "",
-      start: "",
-      end: "",
+      title: dataToUpdate?.title || "",
+      name: dataToUpdate?.name || "",
+      start: dataToUpdate?.start
+        ? new Date(dataToUpdate.start).toISOString().split("T")[0]
+        : "",
+      end: dataToUpdate?.end
+        ? new Date(dataToUpdate.end).toISOString().split("T")[0]
+        : "",
+      present: dataToUpdate?.present || "",
+      experienceImage: dataToUpdate?.imageURL || "",
+
       image: null,
     },
     validationSchema: yup.object({
       title: yup.string().required("Enter Job Title"),
       name: yup.string().required("Enter Company Name"),
       start: yup.string().required("Enter Joining Date"),
-      end: yup.string().required("Enter Relieving Date"),
-      image: yup
-        .mixed()
-        .required("Image is required")
-        .test(
-          "fileType",
-          "Only JPG, JPEG, PNG, WEBP formats are allowed",
-          (value) => {
-            return value && SUPPORTED_FORMATS.includes(value.type);
-          }
-        ),
+      experienceImage: yup.string(),
+      present: yup.string().nullable(),
+      end: yup.string().when("present", {
+        is: (present) => !!present,
+        then: () => yup.string().notRequired(),
+        otherwise: () =>
+          yup
+            .string()
+            .required("Enter Relieving Date")
+            .test(
+              "endAfterStart",
+              "End date cannot be before start date",
+              function (value) {
+                const { start } = this.parent;
+                return !start || !value || new Date(value) >= new Date(start);
+              }
+            ),
+      }),
+      image: yup.mixed().when("experienceImage", {
+        is: (experienceImage) => !!experienceImage,
+        then: () => yup.mixed().notRequired(),
+        otherwise: () =>
+          yup
+            .mixed()
+            .required("Upload Image")
+            .test("fileType", "Only JPG, JPEG, PNG, WEBP", (value) => {
+              return value && SUPPORTED_FORMATS.includes(value.type);
+            }),
+      }),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      if (dataToUpdate) {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("name", values.name);
+        formData.append("title", values.title);
+        formData.append("start", values.start);
+        formData.append("end", values.end);
+        formData.append("image", values.image);
+        formData.append("present", values.present);
+        formData.append("id", dataToUpdate?._id);
+        const response = await axios.put("/api/profession", formData);
+        if (response && response?.data) {
+          if (response?.data?.success) {
+            setUserData(response?.data?.success);
+            setOpenForm(false);
+            setDataToUpdate(null);
+            setLoading(false);
+            toast.success("Experience Updated Successfully");
+          } else if (response?.data?.error) {
+            setOpenForm(false);
+            setDataToUpdate(null);
+            setLoading(false);
+            toast.error(response?.data?.error);
+          } else if (response?.data?.nameError) {
+            setLoading(false);
+            formik.setFieldError("name", response?.data?.nameError);
+          }
+        }
+      } else {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("title", values.title);
+        formData.append("name", values.name);
+        formData.append("start", values.start);
+        formData.append("end", values.end);
+        formData.append("image", values.image);
+        formData.append("present", values.present);
+        const response = await axios.post("/api/profession", formData);
+        if (response && response?.data) {
+          if (response?.data?.success) {
+            setUserData(response?.data?.success);
+            setOpenForm(false);
+            setLoading(false);
+            toast.success("Experience Added Successfully");
+          } else if (response?.data?.error) {
+            setOpenForm(false);
+            setLoading(false);
+            toast.error(response?.data?.error);
+          } else if (response?.data?.nameError) {
+            setLoading(false);
+            formik.setFieldError("name", response?.data?.nameError);
+          }
+        }
+      }
     },
   });
+
+  if (loading) return <Loader />;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center">
@@ -50,7 +140,7 @@ const AddExperience = ({ setOpenForm }) => {
             className="mb-5 w-full text-center font-bold text-xl"
             onSubmit={formik.handleSubmit}
           >
-            Add Experience
+            {dataToUpdate ? "Update Experience" : "Add Experience"}
           </h5>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-5">
             <div className="flex flex-col mb-5">
@@ -122,6 +212,7 @@ const AddExperience = ({ setOpenForm }) => {
                   } // Don't show "present" in the input
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
+                  disabled={formik.values.present === "present"}
                 />
                 <small className="text-red-500">{formik.errors.end}</small>
               </div>
@@ -150,9 +241,16 @@ const AddExperience = ({ setOpenForm }) => {
             <input
               type="checkbox"
               className="mr-2 h-5 w-5"
+              name="present"
               onChange={(e) =>
-                formik.setFieldValue("end", e.target.checked ? "present" : "")
+                formik.setFieldValue(
+                  "present",
+                  e.target.checked ? "present" : null
+                )
               }
+              onBlur={formik.handleBlur}
+              checked={formik.values.present === "present"}
+              disabled={formik.values.end}
             />
             <label htmlFor="checkbox">Currently Working</label>
           </div>
@@ -167,16 +265,18 @@ const AddExperience = ({ setOpenForm }) => {
                   className="w-20 h-auto object-fill"
                 />
               </div>
-            ) : (
+            ) : formik.values.experienceImage ? (
               <div>
                 <Image
                   alt="education"
-                  src="/logo.webp"
+                  src={formik.values.experienceImage}
                   width={100}
                   height={100}
                   className="w-20 h-auto object-fill"
                 />
               </div>
+            ) : (
+              <div></div>
             )}
             <div className="flex justify-end space-x-3">
               <button
@@ -184,11 +284,11 @@ const AddExperience = ({ setOpenForm }) => {
                 className="text-white bg-blue-600 py-2 px-3 rounded hover:bg-blue-700 flex items-center h-fit"
               >
                 {" "}
-                Add Experience
+                {dataToUpdate ? "Update Experience" : "Add Experience"}
               </button>
               <button
                 type="button"
-                onClick={() => setOpenForm(false)}
+                onClick={closeUpdateForm}
                 className="text-white bg-red-600 py-2 px-3 rounded hover:bg-red-700 flex items-center h-fit"
               >
                 {" "}

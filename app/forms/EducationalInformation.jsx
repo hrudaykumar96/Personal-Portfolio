@@ -24,7 +24,7 @@ const EducationalInformation = ({ userData, setUserData }) => {
     }
   }
 
-  const closeModal =(id)=>{
+  const closeModal =()=>{
     setDataToDelete(null);
     setOpenForm(false);
   }

@@ -56,16 +56,17 @@ const AddEducation = ({
             return !start || !value || new Date(value) >= new Date(start);
           }
         ),
-      image: yup
-        .mixed()
-        .when("educationImage", {
-          is: (educationImage) => !!educationImage,
-          then: () => yup.mixed().notRequired(),
-          otherwise: () => yup.mixed().required("Upload Image"),
-        })
-        .test("fileType", "Only JPG, JPEG, PNG, WEBP", (value) => {
-          return value && SUPPORTED_FORMATS.includes(value.type);
-        }),
+      image: yup.mixed().when("educationImage", {
+        is: (educationImage) => !!educationImage,
+        then: () => yup.mixed().notRequired(),
+        otherwise: () =>
+          yup
+            .mixed()
+            .required("Upload Image")
+            .test("fileType", "Only JPG, JPEG, PNG, WEBP", (value) => {
+              return value && SUPPORTED_FORMATS.includes(value.type);
+            }),
+      }),
     }),
     onSubmit: async (values) => {
       if (dataToUpdate) {
