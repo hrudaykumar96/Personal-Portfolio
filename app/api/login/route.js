@@ -40,7 +40,7 @@ export async function POST(req) {
         <div style="text-align: center;">
           <img src="${process.env.NEXT_PUBLIC_FRONTEND_URL}/logo.webp" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
         </div>
-        <h2 style="color: #4CAF50;">Hello ${user.name},</h2>
+        <h2 style="color: #4CAF50; text-transform: capitalize;">Hello ${user.name},</h2>
         <p>Your OTP code is: <strong style="font-size: 18px; color: #4CAF50;">${otp}</strong></p>
         <p style="font-size: 16px;">Use this code to complete your login.</p>
         <p style="font-size: 14px; color: #888;">Please note: Your OTP is valid for 5 minutes only.</p>
