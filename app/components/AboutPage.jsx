@@ -161,7 +161,7 @@ const AboutPage = () => {
                             src={skill?.imageURL || null}
                             alt={skill?.name || null}
                             width={256}
-                            height={256}
+                            height={100}
                             className="object-fill w-full h-full"
                           />
                         )}
