@@ -131,8 +131,6 @@ const AboutPage = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
               {data?.skills?.length > 0 &&
                 data?.skills
-                  ?.slice()
-                  ?.reverse()
                   ?.map((skill, index) => (
                     <motion.div
                       key={index}
@@ -162,7 +160,7 @@ const AboutPage = () => {
                             alt={skill?.name || null}
                             width={256}
                             height={100}
-                            className="object-fill w-full h-full"
+                            className="object-fill w-20 h-20"
                           />
                         )}
                       </div>

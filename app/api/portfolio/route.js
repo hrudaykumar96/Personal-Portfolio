@@ -7,8 +7,6 @@ export const GET = async () => {
         await DbConnection();
         const data = await User.findOne();
 
-        data?.skills?.sort((a, b) => a._id.toString().localeCompare(b._id.toString()));
-        
         data.education.sort((a, b) => new Date(b.start) - new Date(a.start));
         data.experience.sort((a, b) => new Date(b.start) - new Date(a.start));
         data.certifications.sort((a, b) => {
