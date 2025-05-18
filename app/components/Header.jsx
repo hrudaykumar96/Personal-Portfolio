@@ -19,8 +19,7 @@ const navigation = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname(); // Use usePathname to get the current pathname
-  const { theme } = useData();
-  const [loading, setLoading] = useState(false);
+  const { loading, theme } = useData();
 
   // Close the mobile menu when a menu item is clicked
   const handleMenuItemClick = () => {

@@ -4,9 +4,12 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useData } from "../context/contextProvider";
+import LoadingSpinner from "../effects/LoadingSpinner";
 
 const ExperiencePage = () => {
-  const { data, theme } = useData();
+  const { loading, data, theme } = useData();
+
+  if(loading) return <LoadingSpinner/>
 
   return (
     <div
