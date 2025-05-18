@@ -42,9 +42,9 @@ const ToggleButton = () => {
             } w-12 h-12 flex items-center justify-center rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl`}
           >
             {theme === "light" ? (
-              <CiLight className="text-2xl" />
-            ) : (
               <CiDark className="text-2xl" />
+            ) : (
+              <CiLight className="text-2xl" />
             )}
           </button>
         </div>
