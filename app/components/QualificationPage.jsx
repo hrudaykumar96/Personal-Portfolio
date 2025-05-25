@@ -9,7 +9,7 @@ import LoadingSpinner from "../effects/LoadingSpinner";
 const QualificationPage = () => {
   const { loading, data, theme } = useData();
 
-  if(loading) return <LoadingSpinner/>
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div
@@ -62,7 +62,11 @@ const QualificationPage = () => {
                       </div>
                     )}
                     <div className="text-center md:text-left mt-4 md:mt-0">
-                      <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-teal-500" : 'text-indigo-500'} `}>
+                      <h3
+                        className={`text-xl font-semibold ${
+                          theme === "dark" ? "text-teal-500" : "text-indigo-500"
+                        } `}
+                      >
                         {qualification?.degree}
                       </h3>
                       <p
@@ -70,7 +74,13 @@ const QualificationPage = () => {
                           theme === "dark" ? "text-gray-400" : "text-gray-600"
                         } `}
                       >
-                        {qualification?.school} |{" "}
+                        {qualification?.school}{" "}
+                      </p>
+                      <p
+                        className={`${
+                          theme === "dark" ? "text-gray-400" : "text-gray-600"
+                        } `}
+                      >
                         {new Date(qualification?.start).getFullYear()} -{" "}
                         {new Date(qualification?.end).getFullYear()}
                       </p>
@@ -135,10 +145,18 @@ const QualificationPage = () => {
                       </div>
                     )}
                     <div className="text-center md:text-left mt-4 md:mt-0">
-                      <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-teal-500" : 'text-indigo-500'} `}>
+                      <h3
+                        className={`text-xl font-semibold ${
+                          theme === "dark" ? "text-teal-500" : "text-indigo-500"
+                        } `}
+                      >
                         {certification?.name}
                       </h3>
-                      <p className={`${theme === "dark" ? "text-teal-500" : 'text-indigo-500'} `}>
+                      <p
+                        className={`${
+                          theme === "dark" ? "text-teal-500" : "text-indigo-500"
+                        } `}
+                      >
                         <span className="font-semibold">Issued by:</span>{" "}
                         <span
                           className={` ${
@@ -148,14 +166,21 @@ const QualificationPage = () => {
                           {certification?.organization}
                         </span>
                       </p>
-                      <p className={`font-semibold ${theme === "dark" ? "text-teal-500" : 'text-indigo-500'} `}>
+                      <p
+                        className={`font-semibold ${
+                          theme === "dark" ? "text-teal-500" : "text-indigo-500"
+                        } `}
+                      >
                         Issued on:{" "}
                         <span
                           className={` ${
                             theme === "dark" ? "text-gray-300" : "text-gray-700"
                           }`}
                         >
-                          {new Date(certification?.issued).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+                          {new Date(certification?.issued).toLocaleDateString(
+                            "en-US",
+                            { year: "numeric", month: "long" }
+                          )}
                         </span>
                       </p>
                     </div>
