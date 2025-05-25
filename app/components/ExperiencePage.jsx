@@ -68,7 +68,8 @@ const ExperiencePage = () => {
                       {experience?.name}
                     </h3>
                     <p className="text-lg text-gray-400 mb-2">
-                      {experience?.title} |{" "}
+                      {experience?.title} </p>
+                    <p className="text-sm text-gray-400 mb-2">
                       {new Date(experience?.start).toLocaleString("default", {
                         month: "long",
                         year: "numeric",
