@@ -95,13 +95,12 @@ const ExperiencePage = () => {
                     padding: "0",
                   }}
                   icon={
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-md">
+                    <div className="relative rounded-full overflow-hidden">
                       <Image
                         src={experience.imageURL}
                         alt={experience.name}
                         width={48}
                         height={48}
-                        className="object-cover rounded-full"
                       />
                     </div>
                   }
