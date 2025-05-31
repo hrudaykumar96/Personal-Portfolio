@@ -228,7 +228,7 @@ const ContactPage = () => {
               theme === "dark"
                 ? "bg-gray-700 hover:scale-105 hover:bg-teal-600"
                 : "bg-white hover:shadow-2xl"
-            }  p-6 rounded-xl text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
+            }  p-6 rounded-xl z-40 text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -262,7 +262,7 @@ const ContactPage = () => {
               theme === "dark"
                 ? "bg-gray-700 hover:scale-105 hover:bg-teal-600"
                 : "bg-white hover:shadow-2xl"
-            }  p-6 rounded-xl text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
+            }  p-6 rounded-xl z-40 text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -296,7 +296,7 @@ const ContactPage = () => {
               theme === "dark"
                 ? "bg-gray-700 hover:scale-105 hover:bg-teal-600"
                 : "bg-white hover:shadow-2xl"
-            }  p-6 rounded-xl text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
+            }  p-6 rounded-xl z-40 text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
