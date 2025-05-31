@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useData } from "../context/contextProvider";
 import LoadingSpinner from "../effects/LoadingSpinner";
 import Link from "next/link";
+import { FaLaptopCode } from "react-icons/fa";
 
 const AboutPage = () => {
   const { data, loading, theme } = useData();
@@ -18,7 +19,6 @@ const AboutPage = () => {
         theme === "dark" ? "bg-gray-900" : "bg-gray-100"
       } min-h-screen flex flex-col items-center overflow-hidden`}
     >
-      {/* Initial Header / Introduction Section */}
       <motion.section
         className="w-full py-16 px-6 md:px-16 mt-24 flex justify-center items-center"
         initial={{ opacity: 0 }}
@@ -114,14 +114,15 @@ const AboutPage = () => {
       >
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
-            className={`text-3xl font-semibold ${
+            className={`text-3xl font-semibold flex items-center justify-center ${
               theme === "dark" ? "text-teal-400" : "text-indigo-600"
             }  mb-8`}
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            Skills & <span className="text-yellow-500">Abilities</span>
+            <span className="mr-2"><FaLaptopCode /></span>
+            Skills&nbsp;&&nbsp;<span className="text-yellow-500">Abilities</span>
           </motion.h2>
           <div
             className={`w-full ${

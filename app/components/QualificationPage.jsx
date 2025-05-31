@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useData } from "../context/contextProvider";
 import LoadingSpinner from "../effects/LoadingSpinner";
+import { FaGraduationCap } from "react-icons/fa";
+import { PiCertificateFill } from "react-icons/pi";
 
 const QualificationPage = () => {
   const { loading, data, theme } = useData();
@@ -26,12 +28,15 @@ const QualificationPage = () => {
         viewport={{ once: true }}
       >
         <h2
-          className={`text-3xl font-semibold ${
+          className={`text-3xl font-semibold flex items-center ${
             theme === "dark"
               ? "text-white mb-6 bg-teal-500"
               : "text-white bg-indigo-500"
           }  py-2 px-4 rounded-lg shadow-md`}
         >
+          <span className="mr-2">
+            <FaGraduationCap />
+          </span>
           Education
         </h2>
         {data?.education?.length > 0 && (
@@ -110,12 +115,15 @@ const QualificationPage = () => {
           viewport={{ once: true }}
         >
           <h2
-            className={`text-3xl font-semibold ${
+            className={`text-3xl font-semibold flex items-center ${
               theme === "dark"
                 ? "text-white mb-6 bg-teal-500"
                 : "text-white bg-indigo-500"
             }  py-2 px-4 rounded-lg shadow-md`}
           >
+            <span className="mr-2">
+              <PiCertificateFill />
+            </span>
             Certifications
           </h2>
           <div className="mt-4 space-y-6 w-full max-w-4xl">

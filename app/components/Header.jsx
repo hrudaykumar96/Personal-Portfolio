@@ -7,13 +7,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useData } from "../context/contextProvider";
 import LoadingSpinner from "../effects/LoadingSpinner";
+import {
+  FaHome,
+  FaGraduationCap,
+  FaUser,
+  FaBriefcase,
+  FaHeadset,
+} from "react-icons/fa";
 
 const navigation = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Qualification", href: "/qualification" },
-  { name: "Experience", href: "/experience" },
-  { name: "Contact", href: "/contact" },
+  { name: "Home", href: "/", icon: <FaHome /> },
+  { name: "About", href: "/about", icon: <FaUser /> },
+  { name: "Qualification", href: "/qualification", icon: <FaGraduationCap /> },
+  { name: "Experience", href: "/experience", icon: <FaBriefcase /> },
+  { name: "Contact", href: "/contact", icon: <FaHeadset /> },
 ];
 
 export default function Header() {
@@ -25,7 +32,6 @@ export default function Header() {
   const handleMenuItemClick = () => {
     setMobileMenuOpen(false);
   };
-
 
   if (loading) return <LoadingSpinner />;
 
@@ -65,7 +71,7 @@ export default function Header() {
             <Link
               key={item.name}
               href={item.href}
-              className={`rounded-md px-3 py-2 text-sm font-medium
+              className={`rounded-md px-3 py-2 text-sm font-medium flex items-center justify-center
                           ${
                             pathname === item.href
                               ? theme === "dark"
@@ -76,6 +82,8 @@ export default function Header() {
                               : "text-black hover:bg-orange-500 hover:text-white"
                           }`}
             >
+              <span className="text-lg mr-2">{item.icon}</span>
+
               {item.name}
             </Link>
           ))}
@@ -133,7 +141,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold
+                    className={`-mx-3 flex items-center rounded-lg px-3 py-2 text-base/7 font-semibold
   ${
     pathname === item.href
       ? "bg-indigo-500 text-white"
@@ -141,8 +149,9 @@ export default function Header() {
       ? "text-gray-300 hover:bg-gray-700 hover:text-white"
       : "text-gray-900 hover:bg-orange-500 hover:text-white"
   }`}
-                    onClick={handleMenuItemClick} // Close the menu when a link is clicked
+                    onClick={handleMenuItemClick}
                   >
+                    <span className="text-lg mr-2">{item.icon}</span>
                     {item.name}
                   </Link>
                 ))}

@@ -1,19 +1,27 @@
-import React from 'react';
-import { useData } from '../context/contextProvider';
+import React from "react";
 
 const LoadingSpinner = () => {
-
-  const { theme } = useData();
-
   return (
-    <div className={` ${theme === "dark" ? "bg-gray-900" : "bg-gray-100"} min-h-screen flex flex-col items-center justify-center bg-opacity-95`}>
-      {/* Transparent Silver background overlay */}
-      <div className="min-h-screen w-full rounded-lg shadow-xl flex flex-col items-center justify-center space-y-4 z-50 bg-opacity-95">
-        {/* Spinner */}
-        <div className={`border-t-4 ${theme === "dark" ? "border-teal-500" : "border-indigo-700"}  border-solid w-16 h-16 rounded-full animate-spin`}></div>
-        {/* Simplified Loading Text */}
-        <p className={` ${theme === "dark" ? "text-teal-400" : "text-indigo-700"}  text-lg`}>Loading Please Wait...</p>
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 backdrop-blur">
+      <div className="flex space-x-1">
+        {[...Array(5)].map((_, i) => (
+          <div
+            key={i}
+            className="w-4 h-8 bg-gray-300 rounded"
+            style={{
+              animation: "wave 1.2s ease-in-out infinite",
+              animationDelay: `${i * 0.15}s`,
+            }}
+          />
+        ))}
       </div>
+
+      <style>{`
+        @keyframes wave {
+          0%, 40%, 100% { transform: scaleY(0.4); }
+          20% { transform: scaleY(1); }
+        }
+      `}</style>
     </div>
   );
 };

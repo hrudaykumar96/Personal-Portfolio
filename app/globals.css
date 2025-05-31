@@ -33,3 +33,7 @@ input[type= text], input[type=number], textarea, ::placeholder{
 input[type=email], input[type=password]{
   text-transform: none;
 }
+.vertical-timeline-element-content {
+  background-clip: padding-box !important;
+  box-shadow: none !important;
+}

@@ -10,6 +10,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import ButtonLoader from "../effects/ButtonLoader";
+import { FaHeadset } from "react-icons/fa";
 
 const ContactPage = () => {
   const { data, loading, theme } = useData();
@@ -69,10 +70,11 @@ const ContactPage = () => {
         >
           <div className="text-center space-y-6">
             <h2
-              className={`text-4xl font-semibold ${
+              className={`text-4xl font-semibold flex items-center justify-center ${
                 theme === "dark" ? "text-teal-400" : "text-indigo-600"
               } `}
             >
+              <span className="mr-2"><FaHeadset/></span>
               Contact Me
             </h2>
             <p
