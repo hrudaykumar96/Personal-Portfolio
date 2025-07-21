@@ -62,7 +62,7 @@ const QualificationPage = () => {
                           alt=""
                           width={100}
                           height={100}
-                          className="h-full w-full rounded-md md:rounded-lg object-fill"
+                          className="h-full w-full rounded-md md:rounded-lg object-contain"
                         />
                       </div>
                     )}
@@ -148,7 +148,7 @@ const QualificationPage = () => {
                           alt={certification?.name}
                           width={100}
                           height={100}
-                          className="h-full w-full rounded-md md:rounded-lg object-fill"
+                          className="h-full w-full rounded-md md:rounded-lg object-contain"
                         />
                       </div>
                     )}

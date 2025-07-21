@@ -6,7 +6,29 @@ import { motion } from "framer-motion";
 import { useData } from "../context/contextProvider";
 import LoadingSpinner from "../effects/LoadingSpinner";
 import Link from "next/link";
-import { FaLaptopCode } from "react-icons/fa";
+import { FaServer, FaGlobe, FaLaptopCode } from "react-icons/fa";
+
+const services = [
+  {
+    title: "Full-Stack Development",
+    icon: <FaGlobe className="text-4xl mb-4" />,
+    description:
+      "Developing complete web applications with seamless integration between frontend and backend systems.",
+  },
+
+  {
+    title: "Frontend Development",
+    icon: <FaLaptopCode className="text-4xl mb-4" />,
+    description:
+      "Building responsive and user-friendly interfaces that deliver smooth user experiences across devices.",
+  },
+  {
+    title: "Backend Development",
+    icon: <FaServer className="text-4xl mb-4" />,
+    description:
+      "Creating efficient, secure, and scalable server-side logic, APIs, and database management systems.",
+  },
+];
 
 const AboutPage = () => {
   const { data, loading, theme } = useData();
@@ -121,8 +143,11 @@ const AboutPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            <span className="mr-2"><FaLaptopCode /></span>
-            Skills&nbsp;&&nbsp;<span className="text-yellow-500">Abilities</span>
+            <span className="mr-2">
+              <FaLaptopCode />
+            </span>
+            Skills&nbsp;&&nbsp;
+            <span className="text-yellow-500">Abilities</span>
           </motion.h2>
           <div
             className={`w-full ${
@@ -131,48 +156,44 @@ const AboutPage = () => {
           >
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
               {data?.skills?.length > 0 &&
-                data?.skills
-                  ?.map((skill, index) => (
-                    <motion.div
-                      key={index}
-                      className={`${
-                        theme === "dark"
-                          ? "bg-gray-700 hover:bg-teal-600"
-                          : "bg-indigo-50 hover:bg-indigo-100"
-                      }  rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-xl`}
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
-                    >
-                      <div className="text-center flex flex-col gap-3 items-center">
-                        <span
-                          className={`${
-                            theme === "dark"
-                              ? "text-teal-500"
-                              : "text-indigo-600"
-                          }  text-xl font-semibold`}
-                        >
-                          {skill?.name}
-                        </span>
-                        {skill?.imageURL && (
-                          <Image
-                            src={skill?.imageURL || null}
-                            alt={skill?.name || null}
-                            width={256}
-                            height={100}
-                            className="object-fill w-20 h-20"
-                          />
-                        )}
-                      </div>
-                    </motion.div>
-                  ))}
+                data?.skills?.map((skill, index) => (
+                  <motion.div
+                    key={index}
+                    className={`${
+                      theme === "dark"
+                        ? "bg-gray-700 hover:bg-teal-600"
+                        : "bg-indigo-50 hover:bg-indigo-100"
+                    }  rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-xl`}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
+                  >
+                    <div className="text-center flex flex-col gap-3 items-center">
+                      <span
+                        className={`${
+                          theme === "dark" ? "text-teal-500" : "text-indigo-600"
+                        }  text-xl font-semibold`}
+                      >
+                        {skill?.name}
+                      </span>
+                      {skill?.imageURL && (
+                        <Image
+                          src={skill?.imageURL || null}
+                          alt={skill?.name || null}
+                          width={256}
+                          height={100}
+                          className="object-fill w-20 h-20"
+                        />
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
             </div>
           </div>
         </div>
       </motion.section>
 
-      {/* Contact Info Section (Appears after scrolling into view) */}
       <motion.section
         className="w-full py-16"
         initial={{ opacity: 0 }}
@@ -180,108 +201,43 @@ const AboutPage = () => {
         viewport={{ once: true }}
         transition={{ duration: 1, delay: 1.2 }}
       >
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <motion.div
-            className={` ${
-              theme === "dark"
-                ? "bg-gray-700 hover:scale-105 hover:bg-teal-600"
-                : "bg-white hover:shadow-2xl"
-            }  p-6 rounded-xl z-40 text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="flex justify-center mb-4">
-              <FaEnvelope
-                className={`text-4xl ${
+        <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              className={` ${
+                theme === "dark"
+                  ? "bg-gray-700 hover:scale-105 hover:bg-teal-600"
+                  : "bg-white hover:shadow-2xl"
+              }  p-6 rounded-xl z-40 text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div
+                className={`flex flex-col items-center text-center ${
                   theme === "dark" ? "text-teal-500" : "text-indigo-600"
                 } `}
-              />
-            </div>
-            <h4
-              className={`text-xl ${
-                theme === "dark" ? "text-teal-300" : "text-indigo-500"
-              } `}
-            >
-              Email
-            </h4>
-            <p
-              className={`text-lg normal-case ${
-                theme === "dark" ? "text-white" : "text-gray-800"
-              } `}
-            >
-              {data?.email}
-            </p>
-          </motion.div>
-
-          <motion.div
-            className={` ${
-              theme === "dark"
-                ? "bg-gray-700 hover:scale-105 hover:bg-teal-600"
-                : "bg-white hover:shadow-2xl"
-            }  p-6 rounded-xl z-40 text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="flex justify-center mb-4">
-              <FaPhoneAlt
-                className={`text-4xl ${
-                  theme === "dark" ? "text-teal-500" : "text-indigo-600"
-                } `}
-              />
-            </div>
-            <h4
-              className={`text-xl ${
-                theme === "dark" ? "text-teal-300" : "text-indigo-500"
-              } `}
-            >
-              Mobile
-            </h4>
-            <p
-              className={`text-lg ${
-                theme === "dark" ? "text-white" : "text-gray-800"
-              } `}
-            >
-              +91-{data?.mobile}
-            </p>
-          </motion.div>
-
-          <motion.div
-            className={` ${
-              theme === "dark"
-                ? "bg-gray-700 hover:scale-105 hover:bg-teal-600"
-                : "bg-white hover:shadow-2xl"
-            }  p-6 rounded-xl z-40 text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <div className="flex justify-center mb-4">
-              <FaMapMarkerAlt
-                className={`text-4xl ${
-                  theme === "dark" ? "text-teal-500" : "text-indigo-600"
-                } `}
-              />
-            </div>
-            <h4
-              className={`text-xl ${
-                theme === "dark" ? "text-teal-300" : "text-indigo-500"
-              } `}
-            >
-              Location
-            </h4>
-            <p
-              className={`text-lg ${
-                theme === "dark" ? "text-white" : "text-gray-800"
-              } `}
-            >
-              {data?.address}
-            </p>
-          </motion.div>
+              >
+                {service.icon}
+                <h3
+                  className={`text-xl font-semibold mb-2 ${
+                    theme === "dark" ? "text-teal-300" : "text-indigo-500"
+                  } `}
+                >
+                  {service.title}
+                </h3>
+                <p
+                  className={`normal-case ${
+                    theme === "dark" ? "text-white" : "text-gray-800"
+                  } `}
+                >
+                  {service.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </motion.section>
     </div>
