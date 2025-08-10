@@ -197,9 +197,14 @@ const UsersSchema = new mongoose.Schema(
       default: null,
       required: false,
     },
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
 
 const User = mongoose.models.User || mongoose.model("User", UsersSchema);
+
 export default User;
