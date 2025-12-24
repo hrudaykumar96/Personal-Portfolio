@@ -2,24 +2,36 @@ import React from "react";
 
 const LoadingSpinner = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 backdrop-blur">
-      <div className="flex space-x-1">
-        {[...Array(5)].map((_, i) => (
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-900 bg-opacity-70 z-50 backdrop-blur-md">
+    
+      <div className="flex space-x-2">
+        {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="w-4 h-8 bg-gray-300 rounded"
+            className="w-4 h-4 rounded-full animate-bounce"
             style={{
-              animation: "wave 1.2s ease-in-out infinite",
-              animationDelay: `${i * 0.15}s`,
+              animationDelay: `${i * 0.3}s`,
+              animationName: "bounceAndColorSlow",
+              animationDuration: "4s", 
+              animationIterationCount: "infinite",
+              animationTimingFunction: "ease-in-out",
             }}
           />
         ))}
       </div>
 
+      <p className="mt-4 text-white text-sm font-medium animate-pulse">
+        Loading...
+      </p>
+
       <style>{`
-        @keyframes wave {
-          0%, 40%, 100% { transform: scaleY(0.4); }
-          20% { transform: scaleY(1); }
+        @keyframes bounceAndColorSlow {
+          0%, 100% { background-color: white; transform: translateY(0); }
+          16% { background-color: #1e293b; transform: translateY(-15%); }
+          33% { background-color: #4f46e5; transform: translateY(0); }
+          50% { background-color: white; transform: translateY(-15%); }
+          66% { background-color: #1e293b; transform: translateY(0); }
+          83% { background-color: #4f46e5; transform: translateY(-15%); }
         }
       `}</style>
     </div>
