@@ -156,8 +156,8 @@ export async function PUT(req) {
     }
 
     if (image && image !== "null") {
-      if (user.profession[techIndex].imagePublic_id) {
-        await deleteUploadFile(user.profession[techIndex].imagePublic_id);
+      if (user.experience[techIndex].imagePublic_id) {
+        await deleteUploadFile(user.experience[techIndex].imagePublic_id);
       }
       const imageResult = await uploadToCloudinary(image);
       user.experience[techIndex].imageURL = imageResult?.secure_url;

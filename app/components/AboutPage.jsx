@@ -8,28 +8,6 @@ import LoadingSpinner from "../effects/LoadingSpinner";
 import Link from "next/link";
 import { FaServer, FaGlobe, FaLaptopCode } from "react-icons/fa";
 
-const services = [
-  {
-    title: "Full-Stack Development",
-    icon: <FaGlobe className="text-4xl mb-4" />,
-    description:
-      "Developing complete web applications with seamless integration between frontend and backend systems.",
-  },
-
-  {
-    title: "Frontend Development",
-    icon: <FaLaptopCode className="text-4xl mb-4" />,
-    description:
-      "Building responsive and user-friendly interfaces that deliver smooth user experiences across devices.",
-  },
-  {
-    title: "Backend Development",
-    icon: <FaServer className="text-4xl mb-4" />,
-    description:
-      "Creating efficient, secure, and scalable server-side logic, APIs, and database management systems.",
-  },
-];
-
 const AboutPage = () => {
   const { data, loading, theme } = useData();
 
@@ -191,53 +169,6 @@ const AboutPage = () => {
                 ))}
             </div>
           </div>
-        </div>
-      </motion.section>
-
-      <motion.section
-        className="w-full py-16"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 1.2 }}
-      >
-        <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              className={` ${
-                theme === "dark"
-                  ? "bg-gray-700 hover:scale-105 hover:bg-teal-600"
-                  : "bg-white hover:shadow-2xl"
-              }  p-6 rounded-xl z-40 text-center shadow-xl transform transition-all duration-300  hover:shadow-2xl`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              viewport={{ once: true }}
-            >
-              <div
-                className={`flex flex-col items-center text-center ${
-                  theme === "dark" ? "text-teal-500" : "text-indigo-600"
-                } `}
-              >
-                {service.icon}
-                <h3
-                  className={`text-xl font-semibold mb-2 ${
-                    theme === "dark" ? "text-teal-300" : "text-indigo-500"
-                  } `}
-                >
-                  {service.title}
-                </h3>
-                <p
-                  className={`normal-case ${
-                    theme === "dark" ? "text-white" : "text-gray-800"
-                  } `}
-                >
-                  {service.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
         </div>
       </motion.section>
     </div>
